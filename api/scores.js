@@ -7,7 +7,7 @@ let leaderboard = [];
 export default async function handler(req, res) {
   // Configuración de encabezados CORS y Cache
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
@@ -79,6 +79,53 @@ export default async function handler(req, res) {
         success: true,
         rank,
         entry: newEntry,
+        topScores: sorted.slice(0, 15)
+      });
+    }
+
+    if (req.method === 'DELETE') {
+      let body = req.body;
+      if (typeof body === 'string') {
+        try {
+          body = JSON.parse(body);
+        } catch (e) {
+          body = {};
+        }
+      }
+      if (!body || typeof body !== 'object') {
+        body = {};
+      }
+
+      // Verificación de autorización: solo "lorenzo olocco" (sin distinguir mayúsculas)
+      const adminName = (body.adminName || req.query?.adminName || '').trim().toLowerCase();
+      if (adminName !== 'lorenzo olocco') {
+        return res.status(403).json({
+          success: false,
+          error: 'Acceso denegado: solo Lorenzo Olocco tiene permisos de moderación para eliminar calificaciones.'
+        });
+      }
+
+      const { id, clearAll } = body;
+      const targetId = id || req.query?.id;
+
+      if (clearAll) {
+        leaderboard = [];
+      } else if (targetId) {
+        leaderboard = leaderboard.filter(item => item.id !== targetId.toString());
+      } else {
+        return res.status(400).json({ success: false, error: 'Se requiere ID o parámetro clearAll' });
+      }
+
+      const sorted = [...leaderboard].sort((a, b) => {
+        if (b.correctCount !== a.correctCount) {
+          return b.correctCount - a.correctCount;
+        }
+        return b.score - a.score;
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: 'Calificación eliminada correctamente.',
         topScores: sorted.slice(0, 15)
       });
     }

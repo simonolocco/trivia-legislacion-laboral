@@ -653,6 +653,66 @@
       font-weight: 700;
     }
 
+    .btn-delete-entry {
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #b91c1c;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-delete-entry:hover {
+      background: #fecaca;
+      border-color: #ef4444;
+      color: #7f1d1d;
+    }
+
+    .admin-notice-bar {
+      display: none;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .admin-notice-bar.active {
+      display: flex;
+    }
+
+    .admin-notice-text {
+      font-size: 0.78rem;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .btn-admin-clear {
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-admin-clear:hover {
+      background: #fecaca;
+    }
+
     /* Footer discreto */
     .app-footer {
       padding: 14px 22px;
@@ -821,6 +881,14 @@
               <span>Top Mejores Resultados</span>
             </h3>
             <span class="backend-badge" id="backend-status-tag">Servidor Activo</span>
+          </div>
+
+          <!-- Panel de Control para Lorenzo Olocco -->
+          <div class="admin-notice-bar" id="admin-notice-bar">
+            <div class="admin-notice-text">
+              <span>Panel de Moderador (Lorenzo Olocco): Podés eliminar calificaciones individuales o vaciar la tabla.</span>
+            </div>
+            <button class="btn-admin-clear" onclick="adminClearAllScores()">Borrar Todo</button>
           </div>
 
           <div class="table-responsive">
@@ -1314,12 +1382,49 @@
       return saved.slice(0, 10);
     }
 
+    function isCurrentUserAdmin() {
+      return state.participantName.trim().toLowerCase() === 'lorenzo olocco';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     function renderLeaderboard(list) {
       const tbody = document.getElementById('leaderboard-tbody');
       tbody.innerHTML = '';
 
+      const isAdmin = isCurrentUserAdmin();
+      const adminNotice = document.getElementById('admin-notice-bar');
+      if (adminNotice) {
+        adminNotice.classList.toggle('active', isAdmin);
+      }
+
+      // Configurar columnas según permisos
+      const theadRow = document.querySelector('.leaderboard-table thead tr');
+      if (theadRow) {
+        if (isAdmin) {
+          theadRow.innerHTML = `
+            <th class="col-rank">#</th>
+            <th>Participante</th>
+            <th style="text-align: center;">Aciertos</th>
+            <th class="col-score">Puntaje</th>
+            <th style="text-align: center; width: 75px;">Acción</th>
+          `;
+        } else {
+          theadRow.innerHTML = `
+            <th class="col-rank">#</th>
+            <th>Participante</th>
+            <th style="text-align: center;">Aciertos</th>
+            <th class="col-score">Puntaje</th>
+          `;
+        }
+      }
+
       if (!list || list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-subtle); padding: 18px;">No hay registros aún. Sé el primero en completar la evaluación.</td></tr>`;
+        const span = isAdmin ? 5 : 4;
+        tbody.innerHTML = `<tr><td colspan="${span}" style="text-align: center; color: var(--text-subtle); padding: 18px;">No hay registros aún. Sé el primero en completar la evaluación.</td></tr>`;
         return;
       }
 
@@ -1331,17 +1436,96 @@
           tr.className = 'user-row';
         }
 
+        let actionCell = '';
+        if (isAdmin) {
+          actionCell = `
+            <td style="text-align: center;">
+              <button class="btn-delete-entry" onclick="adminDeleteScore('${item.id}', '${escapeHtml(item.name)}')" title="Borrar calificación de ${escapeHtml(item.name)}">
+                Borrar
+              </button>
+            </td>
+          `;
+        }
+
         tr.innerHTML = `
           <td class="col-rank">${idx + 1}</td>
           <td>
-            ${item.name}
+            ${escapeHtml(item.name)}
             ${isCurrent ? '<span class="badge-you">TÚ</span>' : ''}
           </td>
           <td style="text-align: center; font-weight: 600;">${item.correctCount} / 12</td>
           <td class="col-score">${item.score.toLocaleString('es-AR')}</td>
+          ${actionCell}
         `;
         tbody.appendChild(tr);
       });
+    }
+
+    async function adminDeleteScore(id, name) {
+      if (!isCurrentUserAdmin()) return;
+      if (!confirm(`¿Eliminar la calificación de "${name}"?`)) return;
+
+      try {
+        const res = await fetch('/api/scores', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, adminName: state.participantName })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          removeScoreFromLocal(id);
+          renderLeaderboard(data.topScores || getLocalScoresList());
+        } else {
+          throw new Error('Error al eliminar en servidor');
+        }
+      } catch (e) {
+        const updated = removeScoreFromLocal(id);
+        renderLeaderboard(updated);
+      }
+    }
+
+    async function adminClearAllScores() {
+      if (!isCurrentUserAdmin()) return;
+      if (!confirm('¿Estás seguro de que deseás BORRAR TODAS las calificaciones de la tabla?')) return;
+
+      try {
+        const res = await fetch('/api/scores', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ clearAll: true, adminName: state.participantName })
+        });
+
+        clearAllLocalScores();
+        renderLeaderboard([]);
+      } catch (e) {
+        clearAllLocalScores();
+        renderLeaderboard([]);
+      }
+    }
+
+    function removeScoreFromLocal(id) {
+      let saved = getLocalScoresList();
+      saved = saved.filter(item => item.id !== id);
+      try {
+        localStorage.setItem('eval_scores_db', JSON.stringify(saved));
+      } catch (e) {}
+      return saved;
+    }
+
+    function clearAllLocalScores() {
+      try {
+        localStorage.removeItem('eval_scores_db');
+      } catch (e) {}
+    }
+
+    function getLocalScoresList() {
+      try {
+        const stored = localStorage.getItem('eval_scores_db');
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        return [];
+      }
     }
 
     function restartEvaluation() {
