@@ -2,1802 +2,1153 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Derecho al Toque ⚖️ Trivia Laboral</title>
-  
-  <!-- Meta tags PWA para celular -->
-  <meta name="theme-color" content="#4f46e5">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Evaluación de Legislación Laboral | Sistema de Certificación</title>
+
+  <!-- PWA & Mobile Meta -->
+  <meta name="theme-color" content="#0f2e5a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="description" content="Juego interactivo y divertido para celular sobre Legislación General y Laboral Argentina.">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="Plataforma de evaluación profesional e individual sobre Legislación General y Laboral Argentina.">
 
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/svg+xml" href="icon.svg">
-  <link rel="apple-touch-icon" href="icon.svg">
-
-  <!-- Fuente Inter / Poppins -->
+  <!-- Tipografía Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --primary: #6366f1;
-      --primary-dark: #4338ca;
-      --secondary: #ec4899;
-      --accent: #f59e0b;
-      --success: #10b981;
-      --danger: #ef4444;
-      --bg-dark: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.85);
-      --card-border: rgba(255, 255, 255, 0.12);
-      --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-fun: 'Fredoka', cursive, sans-serif;
+      --primary-navy: #0f2e5a;
+      --primary-blue: #1e40af;
+      --accent-blue: #2563eb;
+      --hover-blue: #1d4ed8;
+      --light-blue: #eff6ff;
+      --border-blue: #bfdbfe;
+      
+      --bg-page: #f8fafc;
+      --surface: #ffffff;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      
+      --success-bg: #f0fdf4;
+      --success-border: #86efac;
+      --success-text: #166534;
+      
+      --error-bg: #fef2f2;
+      --error-border: #fca5a5;
+      --error-text: #991b1b;
+      
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      user-select: none;
-      -webkit-user-select: none;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      font-family: var(--font-main);
-      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 70%, #020617 100%);
-      color: #f8fafc;
+      background-color: var(--bg-page);
+      color: var(--text-main);
       min-height: 100vh;
-      min-height: -webkit-fill-available;
-      overflow-x: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Marco simulador de celular en pantallas grandes */
-    .app-viewport {
-      width: 100%;
-      max-width: 440px;
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-      background: #0f172a;
-      position: relative;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
-      overflow: hidden;
+      align-items: center;
+      padding: 16px 12px;
     }
 
-    @media (min-width: 500px) {
-      body {
-        padding: 20px;
-        background: #090d16 radial-gradient(circle at center, #1e1b4b 0%, #090d16 80%);
-      }
-      .app-viewport {
-        min-height: 840px;
-        height: 92vh;
-        border-radius: 42px;
-        border: 4px solid #334155;
-      }
-    }
-
-    /* Fondo con estrellas animadas / partículas */
-    .bg-glow {
-      position: absolute;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 350px;
-      height: 350px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(40px);
-      transition: all 0.6s ease;
-    }
-
-    /* Canvas para fuegos artificiales / confeti */
-    #confetti-canvas {
-      position: absolute;
-      inset: 0;
+    /* Contenedor principal responsive (tipo app móvil en desktop, full width en cel) */
+    .app-container {
       width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 100;
+      max-width: 520px;
+      background: var(--surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 90vh;
     }
 
-    /* Header superior */
-    header {
-      position: relative;
-      z-index: 10;
-      padding: 16px 20px 10px;
+    /* Barra Superior Institucional */
+    .app-header {
+      background: var(--primary-navy);
+      color: #ffffff;
+      padding: 18px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 3px solid var(--accent-blue);
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
       gap: 12px;
     }
 
-    .badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-
-    .streak-pill {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(239, 68, 68, 0.2));
-      border-color: rgba(245, 158, 11, 0.4);
-      color: #fbbf24;
-      animation: pulseStreak 2s infinite ease-in-out;
-    }
-
-    @keyframes pulseStreak {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    .btn-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.06);
-      color: #cbd5e1;
+    .header-logo {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      color: #ffffff;
     }
 
-    .btn-icon:active {
-      transform: scale(0.9);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    /* Barra de progreso de la ronda */
-    .progress-bar-container {
-      position: relative;
-      z-index: 10;
-      padding: 0 20px 10px;
-    }
-
-    .round-indicators {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .round-dot {
-      flex: 1;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.15);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .round-dot.active {
-      background: linear-gradient(90deg, #6366f1, #a855f7);
-      box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
-    }
-
-    .round-dot.completed {
-      background: #10b981;
-    }
-
-    .round-meta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8rem;
-      color: #94a3b8;
-      font-weight: 600;
-    }
-
-    /* Timer radial / barra */
-    .timer-wrap {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #38bdf8;
+    .header-titles h1 {
+      font-size: 1.05rem;
       font-weight: 700;
-      font-size: 0.85rem;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
     }
 
-    .timer-clock {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 2px solid currentColor;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
+    .header-titles p {
+      font-size: 0.75rem;
+      color: #93c5fd;
+      font-weight: 500;
     }
 
-    /* Área principal de scroll / pantallas */
-    main {
+    /* Contenedor de Vistas / Pantallas */
+    .app-body {
       flex: 1;
-      position: relative;
-      z-index: 10;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 10px 20px 24px;
+      padding: 24px 22px;
       display: flex;
       flex-direction: column;
     }
 
-    /* Pantallas */
-    .screen {
+    .view-screen {
       display: none;
       flex-direction: column;
-      height: 100%;
+      flex: 1;
       width: 100%;
-      animation: fadeIn 0.3s ease forwards;
     }
 
-    .screen.active {
+    .view-screen.active {
       display: flex;
+      animation: fadeIn 0.25s ease-out forwards;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Mascota Justi */
-    .mascot-card {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.08));
-      border: 1px solid rgba(168, 85, 247, 0.25);
-      border-radius: 24px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 16px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .mascot-avatar {
-      width: 68px;
-      height: 68px;
-      min-width: 68px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #4f46e5, #9333ea);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.5);
-      position: relative;
-      animation: floatMascot 3s infinite ease-in-out;
-    }
-
-    @keyframes floatMascot {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-5px) rotate(2deg); }
-    }
-
-    .mascot-speech {
-      flex: 1;
-    }
-
-    .mascot-tag {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 800;
-      color: #a855f7;
-      margin-bottom: 2px;
-    }
-
-    .mascot-bubble {
-      font-size: 0.92rem;
-      color: #f1f5f9;
-      font-weight: 600;
-      line-height: 1.35;
-    }
-
-    /* Tarjeta de Pregunta */
-    .question-card {
-      background: rgba(30, 41, 59, 0.7);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 22px 20px;
-      margin-bottom: 16px;
-      position: relative;
-      box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
-    }
-
-    .question-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      padding: 4px 10px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .question-text {
-      font-size: 1.25rem;
-      font-weight: 700;
-      line-height: 1.35;
-      color: #ffffff;
-      font-family: var(--font-fun);
-    }
-
-    /* Opciones de respuesta */
-    .options-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .option-btn {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+    /* Pantalla 1: Formulario de Inicio */
+    .intro-banner {
+      background: var(--light-blue);
+      border: 1px solid var(--border-blue);
+      border-radius: 14px;
       padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      color: #e2e8f0;
-      font-size: 1rem;
-      font-weight: 600;
-      text-align: left;
-      cursor: pointer;
-      position: relative;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      margin-bottom: 22px;
     }
 
-    .option-btn:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(99, 102, 241, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .option-btn:active:not(:disabled) {
-      transform: scale(0.97);
-    }
-
-    .option-letter {
-      width: 34px;
-      height: 34px;
-      min-width: 34px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: #cbd5e1;
-      transition: all 0.2s ease;
-    }
-
-    .option-text {
-      flex: 1;
-      line-height: 1.3;
-    }
-
-    /* Estados de selección */
-    .option-btn.correct {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.35)) !important;
-      border-color: #10b981 !important;
-      color: #a7f3d0 !important;
-      transform: scale(1.02);
-      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
-    }
-
-    .option-btn.correct .option-letter {
-      background: #10b981;
-      color: white;
-      border-color: #10b981;
-    }
-
-    .option-btn.wrong {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(185, 28, 28, 0.35)) !important;
-      border-color: #ef4444 !important;
-      color: #fca5a5 !important;
-      animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-    }
-
-    .option-btn.wrong .option-letter {
-      background: #ef4444;
-      color: white;
-      border-color: #ef4444;
-    }
-
-    .option-btn.dimmed {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    @keyframes shake {
-      10%, 90% { transform: translate3d(-3px, 0, 0); }
-      20%, 80% { transform: translate3d(4px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
-      40%, 60% { transform: translate3d(5px, 0, 0); }
-    }
-
-    /* Comodines / Ayuditas */
-    .powerups-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .powerup-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--card-border);
-      color: #cbd5e1;
-      font-size: 0.78rem;
+    .intro-banner h2 {
+      font-size: 1.05rem;
+      color: var(--primary-navy);
       font-weight: 700;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .powerup-btn span.emoji {
-      font-size: 1.25rem;
-    }
-
-    .powerup-btn:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #6366f1;
-    }
-
-    .powerup-btn:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
-
-    /* Explicación Legal emergente */
-    .explanation-panel {
-      display: none;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid #4f46e5;
-      border-radius: 24px;
-      padding: 18px;
-      margin-top: auto;
-      margin-bottom: 14px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      animation: slideUp 0.35s ease;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .explanation-panel.active {
-      display: block;
-    }
-
-    .explanation-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      color: #818cf8;
       margin-bottom: 6px;
     }
 
-    .explanation-text {
-      font-size: 0.88rem;
+    .intro-banner p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
       line-height: 1.45;
-      color: #cbd5e1;
-      margin-bottom: 8px;
     }
 
-    .explanation-ref {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.1);
-      padding: 3px 8px;
-      border-radius: 6px;
-    }
-
-    /* Botón Siguiente */
-    .btn-primary {
-      width: 100%;
-      background: linear-gradient(135deg, #6366f1, #9333ea);
-      border: none;
-      border-radius: 20px;
-      padding: 16px 24px;
-      color: white;
-      font-family: var(--font-fun);
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+    .features-list {
+      list-style: none;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
       gap: 10px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 24px;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.7);
-    }
-
-    .btn-primary:active {
-      transform: scale(0.97);
-    }
-
-    /* Pantalla de Inicio / Home */
-    .home-hero {
-      text-align: center;
-      padding: 20px 0 10px;
+    .features-list li {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.35;
     }
 
-    .hero-icon {
-      width: 100px;
-      height: 100px;
-      border-radius: 32px;
-      background: linear-gradient(135deg, #4f46e5, #ec4899);
+    .bullet-icon {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      background: #e0f2fe;
+      color: #0369a1;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.2rem;
-      margin-bottom: 16px;
-      box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.6);
-      animation: floatHero 4s infinite ease-in-out;
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-top: 1px;
     }
 
-    @keyframes floatHero {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-10px) rotate(3deg); }
-    }
-
-    .hero-title {
-      font-family: var(--font-fun);
-      font-size: 2.2rem;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 0.95rem;
-      color: #94a3b8;
-      max-width: 300px;
+    .form-group {
       margin-bottom: 24px;
-      line-height: 1.4;
     }
 
-    /* Tarjetas de Selección de Modo */
-    .modes-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
-      width: 100%;
-    }
-
-    .mode-card {
-      background: rgba(30, 41, 59, 0.7);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      text-align: left;
-    }
-
-    .mode-card:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: #6366f1;
-      transform: translateY(-2px);
-    }
-
-    .mode-card:active {
-      transform: scale(0.98);
-    }
-
-    .mode-card.selected {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.2));
-      border-color: #818cf8;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-    }
-
-    .mode-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .mode-info h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 2px;
-    }
-
-    .mode-info p {
-      font-size: 0.8rem;
-      color: #94a3b8;
-      line-height: 1.3;
-    }
-
-    /* Pantalla Configuración de Integrantes */
-    .team-setup-card {
-      background: rgba(30, 41, 59, 0.7);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .team-input-group {
-      margin-bottom: 14px;
-    }
-
-    .team-input-label {
+    .form-group label {
       display: block;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #94a3b8;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-
-    .team-input {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 12px 16px;
-      color: white;
-      font-size: 0.95rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .team-input:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
-    }
-
-    /* Modal / Pantalla de Pase de Celular */
-    .pass-phone-hero {
-      text-align: center;
-      margin: auto 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .pass-phone-icon {
-      font-size: 4rem;
-      margin-bottom: 16px;
-      animation: phoneWiggle 2s infinite ease-in-out;
-    }
-
-    @keyframes phoneWiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-15deg); }
-      75% { transform: rotate(15deg); }
-    }
-
-    .pass-name {
-      font-family: var(--font-fun);
-      font-size: 2.2rem;
-      color: #a855f7;
-      margin-bottom: 6px;
-    }
-
-    .pass-round-title {
-      font-size: 1.1rem;
-      color: #cbd5e1;
-      margin-bottom: 20px;
-    }
-
-    /* Pantalla Resumen Final / Podio */
-    .results-hero {
-      text-align: center;
-      padding: 10px 0 20px;
-    }
-
-    .results-badge {
-      font-size: 3.5rem;
       margin-bottom: 8px;
     }
 
-    .results-score-big {
-      font-family: var(--font-fun);
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #fbbf24;
-      line-height: 1;
-      margin-bottom: 4px;
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+      background: #ffffff;
     }
 
-    .results-score-label {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      margin-bottom: 16px;
+    .form-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
-    .podium-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .podium-item {
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .podium-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .podium-rank {
-      font-size: 1.3rem;
-      font-weight: 800;
-      width: 32px;
-    }
-
-    .podium-name {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #f8fafc;
-    }
-
-    .podium-sub {
-      font-size: 0.75rem;
-      color: #94a3b8;
-    }
-
-    .podium-score {
-      font-family: var(--font-fun);
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #38bdf8;
-    }
-
-    /* Flashcards modo */
-    .flashcard-container {
-      perspective: 1000px;
-      min-height: 320px;
-      margin-bottom: 20px;
+    /* Botones primarios y secundarios */
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 15px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
-    }
-
-    .flashcard-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      min-height: 320px;
-      text-align: center;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-
-    .flashcard-inner.flipped {
-      transform: rotateY(180deg);
-    }
-
-    .flashcard-front, .flashcard-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      border-radius: 28px;
-      padding: 26px 22px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      border: 1px solid var(--card-border);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+      width: 100%;
     }
 
-    .flashcard-front {
-      background: linear-gradient(135deg, #1e293b, #0f172a);
+    .btn-primary:hover:not(:disabled) {
+      background: var(--hover-blue);
     }
 
-    .flashcard-back {
-      background: linear-gradient(135deg, #1e1b4b, #312e81);
-      transform: rotateY(180deg);
+    .btn-primary:active:not(:disabled) {
+      transform: scale(0.99);
     }
 
-    .flashcard-hint {
-      margin-top: 14px;
-      font-size: 0.78rem;
-      color: #94a3b8;
-    }
-
-    /* Botones de acción secundaria */
-    .action-buttons-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
+    .btn-primary:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
     }
 
     .btn-secondary {
-      flex: 1;
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--card-border);
-      color: #f1f5f9;
-      font-weight: 700;
-      font-size: 0.95rem;
+      background: #ffffff;
+      color: var(--text-muted);
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       transition: all 0.2s;
+      width: 100%;
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
+      background: #f1f5f9;
+      color: var(--text-main);
     }
 
-    .btn-whatsapp {
-      background: linear-gradient(135deg, #16a34a, #15803d);
-      border: none;
-      color: white;
+    /* Pantalla 2: Pregunta & Evaluación */
+    .eval-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-subtle);
     }
 
-    /* Modal emergente genérico */
-    .modal-backdrop {
-      display: none;
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      z-index: 120;
-      padding: 20px;
+    .badge-round {
+      background: var(--light-blue);
+      color: var(--primary-blue);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid var(--border-blue);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-blue);
+      transition: width 0.3s ease;
+      width: 8%;
+    }
+
+    .status-ribbon {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px 14px;
+      margin-bottom: 18px;
+      font-size: 0.8rem;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .status-item strong {
+      color: var(--text-main);
+    }
+
+    .timer-indicator {
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .timer-indicator.warning {
+      color: #b91c1c;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .question-box {
+      margin-bottom: 20px;
+    }
+
+    .question-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.38;
+      letter-spacing: -0.2px;
+    }
+
+    /* Lista de Opciones */
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .option-item {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: left;
+      width: 100%;
+    }
+
+    .option-item:hover:not(:disabled) {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+
+    .option-item:disabled {
+      cursor: default;
+    }
+
+    .option-prefix {
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
       align-items: center;
       justify-content: center;
-      animation: fadeIn 0.2s ease;
+      margin-top: 1px;
     }
 
-    .modal-backdrop.active {
-      display: flex;
+    .option-label {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-main);
+      line-height: 1.35;
+      flex: 1;
     }
 
-    .modal-box {
-      width: 100%;
-      max-width: 360px;
-      background: #1e293b;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 28px;
-      padding: 24px;
+    /* Estados de validación sobrios */
+    .option-item.selected-correct {
+      background: var(--success-bg) !important;
+      border-color: var(--success-border) !important;
+    }
+    .option-item.selected-correct .option-prefix {
+      background: var(--success-text);
+      color: #ffffff;
+    }
+    .option-item.selected-correct .option-label {
+      color: var(--success-text);
+      font-weight: 600;
+    }
+
+    .option-item.selected-incorrect {
+      background: var(--error-bg) !important;
+      border-color: var(--error-border) !important;
+    }
+    .option-item.selected-incorrect .option-prefix {
+      background: var(--error-text);
+      color: #ffffff;
+    }
+    .option-item.selected-incorrect .option-label {
+      color: var(--error-text);
+      font-weight: 600;
+    }
+
+    .option-item.faded {
+      opacity: 0.45;
+    }
+
+    /* Panel de Fundamento Jurídico */
+    .legal-feedback-box {
+      display: none;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
+
+    .legal-feedback-box.active {
+      display: block;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .feedback-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .feedback-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+
+    .legal-cite {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    /* Pantalla 3: Resultados & Tabla de Posiciones */
+    .summary-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .summary-header {
       text-align: center;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 14px;
     }
 
-    @keyframes popIn {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .summary-candidate {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .summary-verdict {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      text-align: center;
+    }
+
+    .metric-cell {
+      padding: 8px 4px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .metric-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      line-height: 1.2;
+    }
+
+    .metric-label {
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* Tabla Oficial de Top Mejores */
+    .leaderboard-section {
+      margin-bottom: 24px;
+    }
+
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .backend-badge {
+      font-size: 0.7rem;
+      color: var(--primary-blue);
+      background: var(--light-blue);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .table-responsive {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: left;
+    }
+
+    .leaderboard-table th {
+      background: #f8fafc;
+      color: var(--text-subtle);
+      font-weight: 600;
+      padding: 10px 12px;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .leaderboard-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .leaderboard-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .leaderboard-table tr.user-row {
+      background: var(--light-blue);
+      font-weight: 600;
+    }
+
+    .leaderboard-table tr.user-row td {
+      color: var(--primary-blue);
+    }
+
+    .col-rank {
+      width: 38px;
+      font-weight: 700;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+
+    .col-score {
+      text-align: right;
+      font-weight: 600;
+      color: var(--primary-navy);
+    }
+
+    .badge-you {
+      font-size: 0.65rem;
+      background: var(--primary-blue);
+      color: #ffffff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 700;
+    }
+
+    /* Footer discreto */
+    .app-footer {
+      padding: 14px 22px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+    }
+
+    .button-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- Viewport móvil -->
-  <div class="app-viewport">
-    <div class="bg-glow" id="bg-glow"></div>
-    <canvas id="confetti-canvas"></canvas>
-
-    <!-- Header general -->
-    <header id="app-header">
-      <div class="badge-pill" id="score-pill">
-        <span>⭐</span>
-        <span id="header-score">0 pts</span>
-      </div>
-
-      <div class="badge-pill streak-pill" id="streak-pill" style="display: none;">
-        <span>🔥</span>
-        <span id="header-streak">x2 Racha</span>
-      </div>
-
-      <div style="display: flex; gap: 8px;">
-        <button class="btn-icon" id="btn-sound-toggle" title="Sonido">🔊</button>
-        <button class="btn-icon" id="btn-info" title="Acerca de">⚖️</button>
+  <div class="app-container">
+    
+    <!-- Header Institucional -->
+    <header class="app-header">
+      <div class="header-branding">
+        <div class="header-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+            <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+            <path d="M7 21h10"/>
+            <path d="M12 3v18"/>
+            <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+          </svg>
+        </div>
+        <div class="header-titles">
+          <h1>Legislación General y Laboral</h1>
+          <p>Evaluación Individual • Marco Legal Argentino</p>
+        </div>
       </div>
     </header>
 
-    <!-- Barra de progreso (activa durante el juego) -->
-    <div class="progress-bar-container" id="game-progress-bar" style="display: none;">
-      <div class="round-indicators">
-        <div class="round-dot" id="dot-round-1"></div>
-        <div class="round-dot" id="dot-round-2"></div>
-        <div class="round-dot" id="dot-round-3"></div>
-        <div class="round-dot" id="dot-round-4"></div>
-      </div>
-      <div class="round-meta-row">
-        <span id="current-player-tag">👤 Integrante 1</span>
-        <div class="timer-wrap">
-          <div class="timer-clock">⏱</div>
-          <span id="timer-display">15s</span>
-        </div>
-      </div>
-    </div>
+    <div class="app-body">
 
-    <!-- MAIN: Pantallas -->
-    <main>
-
-      <!-- 1. PANTALLA INICIO (HOME) -->
-      <section class="screen active" id="screen-home">
-        <div class="home-hero">
-          <div class="hero-icon">⚖️</div>
-          <h1 class="hero-title">Derecho al Toque</h1>
-          <p class="hero-subtitle">El juego definitivo de legislación general y laboral para jugar con tu equipo.</p>
+      <!-- PANTALLA 1: INICIO Y REGISTRO -->
+      <section class="view-screen active" id="view-intro">
+        <div class="intro-banner">
+          <h2>Evaluación Normativa</h2>
+          <p>Examen de opción múltiple estructurado en 4 módulos temáticos: Constitución Nacional, Principios del Derecho del Trabajo, LCT 20.744 y Régimen de Córdoba (Ley 7186).</p>
         </div>
 
-        <div class="modes-container">
-          <div class="mode-card selected" data-mode="team" onclick="selectMode('team')">
-            <div class="mode-icon">👥</div>
-            <div class="mode-info">
-              <h4>Modo Grupo (4 Integrantes)</h4>
-              <p>Una ronda para cada uno. ¡Pásense el cel y sumen puntos para el equipo!</p>
-            </div>
-          </div>
+        <ul class="features-list">
+          <li>
+            <div class="bullet-icon">1</div>
+            <div><strong>12 preguntas individuales:</strong> 3 preguntas por módulo con una sola opción correcta.</div>
+          </li>
+          <li>
+            <div class="bullet-icon">2</div>
+            <div><strong>Control de tiempo:</strong> 20 segundos por pregunta para responder.</div>
+          </li>
+          <li>
+            <div class="bullet-icon">3</div>
+            <div><strong>Cuadro de honor integrado:</strong> Registro en base de datos para comparar los mejores desempeños.</div>
+          </li>
+        </ul>
 
-          <div class="mode-card" data-mode="solo" onclick="selectMode('solo')">
-            <div class="mode-icon">👤</div>
-            <div class="mode-info">
-              <h4>Modo Individual</h4>
-              <p>Las 12 preguntas seguidas para poner a prueba tus conocimientos legales.</p>
-            </div>
-          </div>
-
-          <div class="mode-card" data-mode="study" onclick="selectMode('study')">
-            <div class="mode-icon">📖</div>
-            <div class="mode-info">
-              <h4>Machete / Flashcards</h4>
-              <p>Repaso rápido con explicaciones de cada ley antes del examen.</p>
-            </div>
-          </div>
+        <div class="form-group">
+          <label for="participant-name">Nombre y Apellido</label>
+          <input type="text" id="participant-name" class="form-input" placeholder="Ingresá tu nombre completo" maxlength="40" autocomplete="name">
         </div>
 
-        <button class="btn-primary" onclick="startSelectedMode()" style="margin-top: auto;">
-          <span>¡JUGAR AHORA!</span>
-          <span>⚡</span>
-        </button>
-      </section>
-
-      <!-- 2. PANTALLA CONFIGURACIÓN DE EQUIPO (4 Integrantes) -->
-      <section class="screen" id="screen-team-setup">
-        <div style="margin-bottom: 16px;">
-          <h2 style="font-family: var(--font-fun); font-size: 1.6rem; color: #fff;">Configurá tu Equipo</h2>
-          <p style="font-size: 0.85rem; color: #94a3b8;">Cada integrante responderá las 3 preguntas de su ronda.</p>
-        </div>
-
-        <div class="team-setup-card">
-          <div class="team-input-group">
-            <label class="team-input-label">Ronda 1 • Constitución y Derechos</label>
-            <input type="text" id="player-name-1" class="team-input" value="Integrante 1" maxlength="15" placeholder="Nombre integrante 1">
-          </div>
-
-          <div class="team-input-group">
-            <label class="team-input-label">Ronda 2 • Historia y Principios</label>
-            <input type="text" id="player-name-2" class="team-input" value="Integrante 2" maxlength="15" placeholder="Nombre integrante 2">
-          </div>
-
-          <div class="team-input-group">
-            <label class="team-input-label">Ronda 3 • Contrato de Trabajo</label>
-            <input type="text" id="player-name-3" class="team-input" value="Integrante 3" maxlength="15" placeholder="Nombre integrante 3">
-          </div>
-
-          <div class="team-input-group">
-            <label class="team-input-label">Ronda 4 • Unidad 5 (APM / Leyes)</label>
-            <input type="text" id="player-name-4" class="team-input" value="Integrante 4" maxlength="15" placeholder="Nombre integrante 4">
-          </div>
-        </div>
-
-        <div class="action-buttons-row" style="margin-top: auto;">
-          <button class="btn-secondary" onclick="showScreen('screen-home')">⬅ Volver</button>
-          <button class="btn-primary" style="flex: 2;" onclick="beginTeamGame()">¡Empezar Ronda 1! 🚀</button>
+        <div class="button-stack">
+          <button class="btn-primary" id="btn-start" onclick="startEvaluation()">
+            <span>Comenzar Evaluación</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
         </div>
       </section>
 
-      <!-- 3. PANTALLA PASE DE CELULAR (Intermedia entre rondas) -->
-      <section class="screen" id="screen-pass-phone">
-        <div class="pass-phone-hero">
-          <div class="pass-phone-icon">📱</div>
-          <div style="font-size: 0.9rem; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">
-            ¡PASALE EL CELULAR A!
-          </div>
-          <h2 class="pass-name" id="pass-next-player">Integrante 2</h2>
-          <p class="pass-round-title" id="pass-next-round">Ronda 2: Historia y principios</p>
+      <!-- PANTALLA 2: EVALUACIÓN DE PREGUNTAS -->
+      <section class="view-screen" id="view-quiz">
+        <div class="eval-meta-bar">
+          <span class="badge-round" id="quiz-module-badge">Módulo 1: Constitución y Derechos</span>
+          <span id="quiz-counter">Pregunta 1 de 12</span>
+        </div>
 
-          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); border-radius: 20px; padding: 16px; margin-bottom: 24px; max-width: 320px;">
-            <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.4;" id="pass-round-desc">
-              Preparate para responder 3 preguntas con límite de tiempo. ¡Sumale puntos a tu equipo!
-            </p>
+        <div class="progress-track">
+          <div class="progress-fill" id="quiz-progress-fill"></div>
+        </div>
+
+        <div class="status-ribbon">
+          <div class="status-item">
+            <span>Participante:</span>
+            <strong id="quiz-participant-display">-</strong>
+          </div>
+          <div class="status-item">
+            <span>Tiempo:</span>
+            <span class="timer-indicator" id="quiz-timer">20s</span>
+          </div>
+          <div class="status-item">
+            <span>Puntaje:</span>
+            <strong id="quiz-score-display">0 pts</strong>
           </div>
         </div>
 
-        <button class="btn-primary" onclick="proceedAfterPass()">¡Estoy Listo/a! 🔥</button>
+        <div class="question-box">
+          <h2 class="question-title" id="quiz-question-text">¿Cuál es la ley suprema de Argentina?</h2>
+        </div>
+
+        <div class="options-group" id="quiz-options-group">
+          <!-- Opciones dinámicas -->
+        </div>
+
+        <div class="legal-feedback-box" id="legal-feedback-box">
+          <div class="feedback-title" id="feedback-status-title">Fundamento Jurídico</div>
+          <p class="feedback-text" id="feedback-text"></p>
+          <div class="legal-cite" id="feedback-cite"></div>
+        </div>
+
+        <div class="button-stack" style="margin-top: auto;">
+          <button class="btn-primary" id="btn-next-step" style="display: none;" onclick="handleNextQuestion()">
+            <span id="btn-next-label">Siguiente Pregunta</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
       </section>
 
-      <!-- 4. PANTALLA DE JUEGO / PREGUNTAS -->
-      <section class="screen" id="screen-game">
+      <!-- PANTALLA 3: RESULTADOS Y CUADRO DE HONOR (LEADERBOARD) -->
+      <section class="view-screen" id="view-results">
         
-        <!-- Mascota Justi -->
-        <div class="mascot-card">
-          <div class="mascot-avatar" id="mascot-avatar">
-            <span id="mascot-face" style="font-size: 2.2rem;">👨‍⚖️</span>
+        <div class="summary-card">
+          <div class="summary-header">
+            <h2 class="summary-candidate" id="result-name">Juan Pérez</h2>
+            <p class="summary-verdict" id="result-verdict">Evaluación Completada</p>
           </div>
-          <div class="mascot-speech">
-            <div class="mascot-tag" id="mascot-tag">Don Justo te alienta</div>
-            <div class="mascot-bubble" id="mascot-text">¡Leé con atención, el derecho protege al laburante!</div>
-          </div>
-        </div>
 
-        <!-- Pregunta actual -->
-        <div class="question-card">
-          <div class="question-badge" id="question-badge">Pregunta 1 de 3</div>
-          <h3 class="question-text" id="question-text">¿Cuál es la ley suprema de Argentina?</h3>
-        </div>
-
-        <!-- Comodines -->
-        <div class="powerups-row" id="powerups-row">
-          <button class="powerup-btn" id="powerup-fifty" onclick="usePowerupFifty()">
-            <span class="emoji">💡</span>
-            <span>50/50</span>
-          </button>
-          <button class="powerup-btn" id="powerup-time" onclick="usePowerupTime()">
-            <span class="emoji">⏳</span>
-            <span>+10s</span>
-          </button>
-          <button class="powerup-btn" id="powerup-shield" onclick="usePowerupShield()">
-            <span class="emoji">🛡️</span>
-            <span>Escudo</span>
-          </button>
-        </div>
-
-        <!-- Opciones -->
-        <div class="options-grid" id="options-grid">
-          <!-- Generadas dinámicamente -->
-        </div>
-
-        <!-- Explicación desplegable -->
-        <div class="explanation-panel" id="explanation-panel">
-          <div class="explanation-header">
-            <span id="explanation-icon">💡</span>
-            <span id="explanation-title">Fundamento Jurídico</span>
-          </div>
-          <p class="explanation-text" id="explanation-text"></p>
-          <div class="explanation-ref" id="explanation-ref"></div>
-        </div>
-
-        <button class="btn-primary" id="btn-next-question" style="display: none;" onclick="nextQuestion()">
-          <span id="btn-next-label">Siguiente Pregunta</span>
-          <span>➡</span>
-        </button>
-      </section>
-
-      <!-- 5. PANTALLA FLASHCARDS (Modo Estudio) -->
-      <section class="screen" id="screen-flashcards">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <div>
-            <h2 style="font-family: var(--font-fun); font-size: 1.5rem; color: #fff;">Machete de Estudio</h2>
-            <p style="font-size: 0.8rem; color: #94a3b8;" id="fc-counter">Tarjeta 1 de 12</p>
-          </div>
-          <button class="btn-icon" onclick="showScreen('screen-home')">✕</button>
-        </div>
-
-        <div class="flashcard-container" onclick="flipFlashcard()">
-          <div class="flashcard-inner" id="flashcard-inner">
-            <div class="flashcard-front">
-              <span style="font-size: 2rem; margin-bottom: 12px;">⚖️</span>
-              <span class="badge-pill" id="fc-round-badge" style="margin-bottom: 14px; font-size: 0.75rem;">Ronda 1</span>
-              <h3 style="font-size: 1.25rem; font-weight: 700; line-height: 1.4; color: #fff;" id="fc-question">Pregunta</h3>
-              <p class="flashcard-hint">👆 Tocá para dar vuelta la tarjeta</p>
+          <div class="metrics-grid">
+            <div class="metric-cell">
+              <div class="metric-value" id="result-correct-count">11/12</div>
+              <div class="metric-label">Respuestas Correctas</div>
             </div>
-            <div class="flashcard-back">
-              <span style="font-size: 1.8rem; margin-bottom: 8px;">✅</span>
-              <h4 style="font-size: 1.15rem; font-weight: 800; color: #a7f3d0; margin-bottom: 10px;" id="fc-answer">Respuesta Correcta</h4>
-              <p style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.45; margin-bottom: 10px;" id="fc-explanation">Explicación</p>
-              <span class="explanation-ref" id="fc-ref">Artículo</span>
-              <p class="flashcard-hint">👆 Tocá para volver a la pregunta</p>
+            <div class="metric-cell">
+              <div class="metric-value" id="result-score-value">1.180</div>
+              <div class="metric-label">Puntaje Total</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-value" id="result-percentage">92%</div>
+              <div class="metric-label">Efectividad</div>
             </div>
           </div>
         </div>
 
-        <div class="action-buttons-row" style="margin-top: auto;">
-          <button class="btn-secondary" onclick="prevFlashcard()">⬅ Anterior</button>
-          <button class="btn-primary" onclick="nextFlashcard()">Siguiente ➡</button>
-        </div>
-      </section>
+        <!-- Tabla de Clasificación / Top Mejores -->
+        <div class="leaderboard-section">
+          <div class="section-title-row">
+            <h3 class="section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                <path d="M4 22h16"/>
+                <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c0-.77.34-1.5.94-1.99l1.63-1.34c.91-.74 1.43-1.85 1.43-3.03V6H6v2.34c0 1.18.52 2.29 1.43 3.03l1.63 1.34c.6.49.94 1.22.94 1.99Z"/>
+              </svg>
+              <span>Top Mejores Resultados</span>
+            </h3>
+            <span class="backend-badge" id="backend-status-tag">Servidor Activo</span>
+          </div>
 
-      <!-- 6. PANTALLA RESULTADOS / PODIO FINAL -->
-      <section class="screen" id="screen-results">
-        <div class="results-hero">
-          <div class="results-badge" id="results-badge">🏆</div>
-          <h2 style="font-family: var(--font-fun); font-size: 1.8rem; color: #fff; margin-bottom: 4px;" id="results-title">¡Misión Cumplida!</h2>
-          <div class="results-score-big" id="results-total-score">1200</div>
-          <p class="results-score-label">PUNTOS TOTALES DEL EQUIPO</p>
-        </div>
-
-        <!-- Podio de integrantes -->
-        <div style="font-size: 0.85rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
-          Desempeño por Integrante
-        </div>
-        <div class="podium-list" id="podium-list">
-          <!-- Generado con JS -->
-        </div>
-
-        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; margin-bottom: 20px; text-align: center;">
-          <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.4;" id="results-feedback">
-            ¡Felicitaciones! Demostraron conocer a fondo los derechos laborales y la Constitución.
-          </p>
-        </div>
-
-        <div class="action-buttons-row" style="margin-top: auto; flex-direction: column;">
-          <button class="btn-primary btn-whatsapp" onclick="shareOnWhatsApp()">
-            <span>📲 Compartir en WhatsApp</span>
-          </button>
-          <div style="display: flex; gap: 10px; width: 100%;">
-            <button class="btn-secondary" onclick="showScreen('screen-home')">🏠 Menú Principal</button>
-            <button class="btn-primary" onclick="restartGame()">🔄 Jugar de Nuevo</button>
+          <div class="table-responsive">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th class="col-rank">#</th>
+                  <th>Participante</th>
+                  <th style="text-align: center;">Aciertos</th>
+                  <th class="col-score">Puntaje</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-tbody">
+                <tr>
+                  <td colspan="4" style="text-align: center; color: var(--text-subtle); padding: 16px;">
+                    Cargando clasificación...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+
+        <div class="button-stack">
+          <button class="btn-primary" onclick="restartEvaluation()">
+            <span>Realizar Nueva Evaluación</span>
+          </button>
+          <button class="btn-secondary" onclick="copyResultSummary()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span id="btn-copy-label">Copiar Reporte Formal</span>
+          </button>
+        </div>
+
       </section>
 
-    </main>
-
-    <!-- Modal Acerca de / Info Legal -->
-    <div class="modal-backdrop" id="modal-info">
-      <div class="modal-box">
-        <div style="font-size: 2.5rem; margin-bottom: 10px;">⚖️</div>
-        <h3 style="font-family: var(--font-fun); font-size: 1.4rem; color: #fff; margin-bottom: 8px;">Derecho al Toque</h3>
-        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.45; margin-bottom: 14px;">
-          Trivia educativa diseñada para estudiantes sobre Legislación General y Laboral Argentina (Constitución Nacional, Art. 14 bis, Ley 20.744 de Contrato de Trabajo, Ley 11.544 de Jornada y Ley Provincial Córdoba 7186 de APM).
-        </p>
-        <div style="font-size: 0.75rem; color: #64748b; margin-bottom: 18px;">
-          Desarrollado para jugar en celular • 100% Offline
-        </div>
-        <button class="btn-primary" onclick="closeModal('modal-info')">¡Entendido! 👍</button>
-      </div>
     </div>
+
+    <footer class="app-footer">
+      Sistema Oficial de Evaluación • Legislación Laboral y Constitución Nacional
+    </footer>
 
   </div>
 
   <script>
     /* ==========================================================
-       DATOS COMPLETOS DE LAS 4 RONDAS Y PREGUNTAS
+       DATOS NORMATIVOS OFICIALES (12 PREGUNTAS)
        ========================================================== */
-    const GAME_DATA = {
-      rounds: [
-        {
-          id: 1,
-          title: "Constitución y Derechos",
-          subtitle: "Ronda 1 • Integrante 1",
-          icon: "⚖️",
-          color: "linear-gradient(135deg, #4f46e5, #6366f1)",
-          description: "La ley suprema de Argentina y las garantías protectorias del Art. 14 bis.",
-          questions: [
-            {
-              id: 1,
-              question: "¿Cuál es la ley suprema de Argentina?",
-              options: [
-                "La Constitución Nacional",
-                "El Código de Tránsito",
-                "El reglamento de una empresa"
-              ],
-              correctIndex: 0,
-              explanation: "La Constitución Nacional es la norma cúspide de nuestro ordenamiento (junto a los tratados internacionales de derechos humanos con jerarquía constitucional, según el art. 75 inc. 22). Ninguna ley ni reglamento inferior puede violarla.",
-              reference: "Art. 31 y 75 inc. 22 CN",
-              mascotRight: "¡Golazo constitucional! ¡La ley suprema siempre arriba de todo!",
-              mascotWrong: "¡Ojo! La ley suprema es la Constitución Nacional, lo dice el Art. 31."
-            },
-            {
-              id: 2,
-              question: "¿Qué artículo de la Constitución protege los derechos de los trabajadores?",
-              options: [
-                "Art. 1",
-                "Art. 14 bis",
-                "Art. 100"
-              ],
-              correctIndex: 1,
-              explanation: "El histórico Artículo 14 bis fue incorporado en la reforma constitucional de 1957. Consagra la protección del trabajo, la jornada limitada, el salario mínimo vital móvil y la seguridad social integral.",
-              reference: "Artículo 14 bis de la Constitución Nacional",
-              mascotRight: "¡Excelente! El 14 bis es el escudo supremo de todo trabajador.",
-              mascotWrong: "¡No te olvides! Es el 14 bis, el pilar laboral de nuestra Carta Magna."
-            },
-            {
-              id: 3,
-              question: "¿Cuál de estos es un derecho del trabajador según el art. 14 bis?",
-              options: [
-                "Trabajar sin descanso",
-                "Cobrar menos por la misma tarea",
-                "Vacaciones pagas"
-              ],
-              correctIndex: 2,
-              explanation: "El art. 14 bis garantiza expresamente el descanso y vacaciones pagadas, jornada limitada, igual remuneración por igual tarea y protección contra el despido arbitrario.",
-              reference: "Art. 14 bis, párrafo primero CN",
-              mascotRight: "¡Vacaciones pagas para descansar en las sierras como corresponde!",
-              mascotWrong: "¡Cuidado! Trabajar sin descanso o cobrar menos es ilegal; el derecho son las vacaciones pagas."
-            }
-          ]
-        },
-        {
-          id: 2,
-          title: "Historia y Principios",
-          subtitle: "Ronda 2 • Integrante 2",
-          icon: "📜",
-          color: "linear-gradient(135deg, #d97706, #ea580c)",
-          description: "La lucha obrera de Chicago en 1886 y los principios tutelar e irrenunciable.",
-          questions: [
-            {
-              id: 4,
-              question: "¿Qué pedían los obreros de Chicago en 1886?",
-              options: [
-                "Más feriados",
-                "Cobrar en dólares",
-                "Jornada de 8 horas"
-              ],
-              correctIndex: 2,
-              explanation: "En mayo de 1886 en Chicago, miles de obreros se declararon en huelga bajo la consigna: '8 horas para el trabajo, 8 para el sueño y 8 para la casa'. De esa gesta nació el 1° de Mayo (Día del Trabajador).",
-              reference: "Mártires de Chicago (1886) - Jornada de 8 horas",
-              mascotRight: "¡Exacto! 8 horas de trabajo, 8 de descanso y 8 para la vida personal.",
-              mascotWrong: "¡No! Pedían la jornada laboral de 8 horas, antes trabajaban hasta 16 horas."
-            },
-            {
-              id: 5,
-              question: "¿A quién busca proteger el derecho laboral?",
-              options: [
-                "Al trabajador, que es la parte más débil",
-                "Solo al empleador",
-                "Solo al Estado"
-              ],
-              correctIndex: 0,
-              explanation: "El principio protectorio busca compensar la desigualdad económica y de poder de negociación entre el trabajador y el empleador. En caso de duda, siempre se favorece al trabajador ('in dubio pro operario').",
-              reference: "Principio Protectorio - Art. 9 de la Ley 20.744",
-              mascotRight: "¡Muy bien! El derecho laboral nació para equilibrar la cancha para el más débil.",
-              mascotWrong: "¡Error! El derecho laboral protege al trabajador frente a la desigualdad económica."
-            },
-            {
-              id: 6,
-              question: "¿Puede un trabajador renunciar a sus derechos laborales?",
-              options: [
-                "Sí, cuando quiera",
-                "No, son irrenunciables",
-                "Solo si el jefe se lo pide"
-              ],
-              correctIndex: 1,
-              explanation: "Por el Principio de Irrenunciabilidad (Art. 12 LCT), todos los derechos que otorgan la ley y los convenios colectivos son de orden público. Cualquier renuncia o firma en contra es absolutamente nula.",
-              reference: "Art. 12 de la Ley de Contrato de Trabajo (LCT)",
-              mascotRight: "¡Así se habla! Aunque tu jefe te haga firmar una renuncia, la ley la declara nula.",
-              mascotWrong: "¡Jamás! Los derechos laborales son irrenunciables; cualquier renuncia es nula."
-            }
-          ]
-        },
-        {
-          id: 3,
-          title: "Contrato de Trabajo",
-          subtitle: "Ronda 3 • Integrante 3",
-          icon: "🤝",
-          color: "linear-gradient(135deg, #059669, #0d9488)",
-          description: "La Ley 20.744 (LCT), subordinación jurídica y la persona física.",
-          questions: [
-            {
-              id: 7,
-              question: "¿Qué ley regula el contrato de trabajo en Argentina?",
-              options: [
-                "La Ley de Tránsito",
-                "La Ley de Contrato de Trabajo (20.744)",
-                "La Ley de Propiedad Horizontal"
-              ],
-              correctIndex: 1,
-              explanation: "La Ley N° 20.744 es la Ley de Contrato de Trabajo (LCT). Rige las relaciones de trabajo en relación de dependencia en el sector privado de todo el país.",
-              reference: "Ley Nacional 20.744 (LCT)",
-              mascotRight: "¡Clavado al ángulo! La 20.744 es la biblia del derecho laboral argentino.",
-              mascotWrong: "¡Pifiaste! Es la Ley 20.744 de Contrato de Trabajo."
-            },
-            {
-              id: 8,
-              question: "¿Cuándo hay un contrato de trabajo?",
-              options: [
-                "Cuando alguien trabaja para otro, bajo sus órdenes, y cobra un sueldo",
-                "Cuando alguien ayuda gratis a un amigo",
-                "Cuando una empresa vende un producto"
-              ],
-              correctIndex: 0,
-              explanation: "Hay contrato de trabajo cuando una persona física se compromete a prestar servicios en favor de otra, bajo su dependencia y subordinación (jurídica, técnica y económica), a cambio de una remuneración.",
-              reference: "Art. 21 y 22 de la Ley 20.744",
-              mascotRight: "¡Exacto! Subordinación y remuneración son las dos caras de la relación laboral.",
-              mascotWrong: "¡Atento! Hay contrato de trabajo cuando hay subordinación y cobro de sueldo."
-            },
-            {
-              id: 9,
-              question: "El trabajador, ¿qué tiene que ser siempre?",
-              options: [
-                "Una empresa",
-                "Un grupo de empresas",
-                "Una persona física"
-              ],
-              correctIndex: 2,
-              explanation: "El trabajador es siempre una persona humana (física). El trabajo no puede ser prestado por una sociedad anónima o SRL; es un acto personal e intransferible.",
-              reference: "Art. 25 de la Ley 20.744",
-              mascotRight: "¡Una persona física de carne y hueso! Nadie puede mandar un robot o empresa como empleado.",
-              mascotWrong: "¡No! Una empresa puede ser empleadora, pero el trabajador es SIEMPRE persona física."
-            }
-          ]
-        },
-        {
-          id: 4,
-          title: "Unidad 5: Leyes y Régimen",
-          subtitle: "Ronda 4 • Integrante 4",
-          icon: "🏥",
-          color: "linear-gradient(135deg, #7c3aed, #db2777)",
-          description: "La ley cordobesa de APM 7186, jornada máxima y despido sin causa.",
-          questions: [
-            {
-              id: 10,
-              question: "¿Qué ley de Córdoba regula la profesión del APM?",
-              options: [
-                "La Ley 7186",
-                "La Ley de Tránsito",
-                "La Ley de Alquileres"
-              ],
-              correctIndex: 0,
-              explanation: "En la Provincia de Córdoba, la Ley Provincial N° 7186 regula el ejercicio profesional de los Agentes de Propaganda Médica (Visitadores Médicos), su matrícula y normas deontológicas.",
-              reference: "Ley Provincial de Córdoba N° 7186",
-              mascotRight: "¡Golazo cordobés! La Ley 7186 protege la profesión del APM.",
-              mascotWrong: "¡Ojo! Es la Ley 7186 de la Provincia de Córdoba."
-            },
-            {
-              id: 11,
-              question: "¿Cuál es la jornada máxima de trabajo por día?",
-              options: [
-                "12 horas",
-                "8 horas",
-                "4 horas"
-              ],
-              correctIndex: 1,
-              explanation: "La Ley 11.544 fija el tope legal de la jornada ordinaria diurna en 8 horas diarias o 48 horas semanales. Toda hora que exceda este límite debe abonarse como hora extra con recargo.",
-              reference: "Ley 11.544 de Jornada Laboral y Art. 196 LCT",
-              mascotRight: "¡8 horas máximas! Todo lo que pase de ahí se paga con recargo de horas extras.",
-              mascotWrong: "¡No te dejes explotar! El tope diario legal ordinario es de 8 horas."
-            },
-            {
-              id: 12,
-              question: "Si despiden al trabajador sin causa justa, ¿qué corresponde?",
-              options: [
-                "Nada, el empleador decide",
-                "Solo un saludo",
-                "Una indemnización"
-              ],
-              correctIndex: 2,
-              explanation: "Ante el despido incausado o arbitrario, la ley impone al empleador la obligación de pagar la indemnización por antigüedad (Art. 245 LCT), además del preaviso e integración del mes.",
-              reference: "Art. 245 de la Ley 20.744 y Art. 14 bis CN",
-              mascotRight: "¡Una indemnización con todas las letras! La estabilidad impropia se repara con plata.",
-              mascotWrong: "¡Para nada! Corresponde indemnización por antigüedad, preaviso y conceptos adeudados."
-            }
-          ]
-        }
-      ]
-    };
+    const EVAL_DATA = [
+      // Módulo 1: Constitución y Derechos
+      {
+        module: "Módulo 1: Constitución y Derechos",
+        question: "¿Cuál es la ley suprema de Argentina?",
+        options: [
+          "La Constitución Nacional",
+          "El Código de Tránsito",
+          "El reglamento de una empresa"
+        ],
+        correctIndex: 0,
+        explanation: "La Constitución Nacional es la norma cúspide del ordenamiento jurídico (junto a los tratados internacionales de DD.HH. con jerarquía constitucional según el art. 75 inc. 22). Todas las demás leyes deben ajustarse a ella.",
+        cite: "Art. 31 y 75 inc. 22 de la Constitución Nacional"
+      },
+      {
+        module: "Módulo 1: Constitución y Derechos",
+        question: "¿Qué artículo de la Constitución protege los derechos de los trabajadores?",
+        options: [
+          "Art. 1",
+          "Art. 14 bis",
+          "Art. 100"
+        ],
+        correctIndex: 1,
+        explanation: "El Artículo 14 bis fue incorporado en la reforma de 1957. Garantiza condiciones dignas y equitativas de labor, jornada limitada, descanso y vacaciones pagadas, retribución justa y seguridad social integral.",
+        cite: "Artículo 14 bis de la Constitución Nacional"
+      },
+      {
+        module: "Módulo 1: Constitución y Derechos",
+        question: "¿Cuál de estos es un derecho del trabajador según el art. 14 bis?",
+        options: [
+          "Trabajar sin descanso",
+          "Cobrar menos por la misma tarea",
+          "Vacaciones pagas"
+        ],
+        correctIndex: 2,
+        explanation: "El Art. 14 bis reconoce expresamente el derecho a descanso y vacaciones pagadas, jornada limitada, igual remuneración por igual tarea y protección contra el despido arbitrario.",
+        cite: "Art. 14 bis (primer párrafo) CN"
+      },
+
+      // Módulo 2: Historia y Principios
+      {
+        module: "Módulo 2: Historia y Principios",
+        question: "¿Qué pedían los obreros de Chicago en 1886?",
+        options: [
+          "Más feriados",
+          "Cobrar en dólares",
+          "Jornada de 8 horas"
+        ],
+        correctIndex: 2,
+        explanation: "En mayo de 1886, los obreros de Chicago reclamaron la reducción de la jornada laboral bajo el lema: '8 horas de trabajo, 8 horas de reposo y 8 horas de educación/hogar'. De este hito surge el Día Internacional de los Trabajadores.",
+        cite: "Reclamo histórico de Haymarket (1886) - Jornada máxima"
+      },
+      {
+        module: "Módulo 2: Historia y Principios",
+        question: "¿A quién busca proteger el derecho laboral?",
+        options: [
+          "Al trabajador, que es la parte más débil",
+          "Solo al empleador",
+          "Solo al Estado"
+        ],
+        correctIndex: 0,
+        explanation: "El principio protectorio ('in dubio pro operario') equilibra la desigualdad sustancial entre empleador y dependiente, garantizando un piso inderogable de derechos humanos y laborales.",
+        cite: "Principio Protectorio - Art. 9 de la Ley 20.744 (LCT)"
+      },
+      {
+        module: "Módulo 2: Historia y Principios",
+        question: "¿Puede un trabajador renunciar a sus derechos laborales?",
+        options: [
+          "Sí, cuando quiera",
+          "No, son irrenunciables",
+          "Solo si el jefe se lo pide"
+        ],
+        correctIndex: 1,
+        explanation: "Por el Principio de Irrenunciabilidad (Art. 12 LCT), toda convención de partes que suprima o reduzca los derechos previstos en la ley o convenios colectivos es nula y sin efecto.",
+        cite: "Art. 12 de la Ley de Contrato de Trabajo N° 20.744"
+      },
+
+      // Módulo 3: Contrato de Trabajo
+      {
+        module: "Módulo 3: Contrato de Trabajo",
+        question: "¿Qué ley regula el contrato de trabajo en Argentina?",
+        options: [
+          "La Ley de Tránsito",
+          "La Ley de Contrato de Trabajo (20.744)",
+          "La Ley de Propiedad Horizontal"
+        ],
+        correctIndex: 1,
+        explanation: "La Ley N° 20.744 (LCT) sancionada en 1974 es la legislación marco que rige las relaciones laborales del sector privado bajo relación de dependencia en la República Argentina.",
+        cite: "Ley Nacional N° 20.744 de Contrato de Trabajo"
+      },
+      {
+        module: "Módulo 3: Contrato de Trabajo",
+        question: "¿Cuándo hay un contrato de trabajo?",
+        options: [
+          "Cuando alguien trabaja para otro, bajo sus órdenes, y cobra un sueldo",
+          "Cuando alguien ayuda gratis a un amigo",
+          "Cuando una empresa vende un producto"
+        ],
+        correctIndex: 0,
+        explanation: "Existe contrato de trabajo cuando una persona física se obliga a realizar actos o prestar servicios a favor de otra persona y bajo su dependencia (subordinación jurídica, económica y técnica) a cambio de una remuneración.",
+        cite: "Art. 21 y 22 de la Ley 20.744"
+      },
+      {
+        module: "Módulo 3: Contrato de Trabajo",
+        question: "El trabajador, ¿qué tiene que ser siempre?",
+        options: [
+          "Una empresa",
+          "Un grupo de empresas",
+          "Una persona física"
+        ],
+        correctIndex: 2,
+        explanation: "El trabajador es siempre una persona humana (física). El carácter personalísimo de la prestación laboral impide que una persona jurídica actúe en calidad de trabajadora dependiente.",
+        cite: "Art. 25 de la Ley 20.744"
+      },
+
+      // Módulo 4: Unidad 5 - Normativa y Jornada
+      {
+        module: "Módulo 4: Unidad 5 - APM y Régimen Laboral",
+        question: "¿Qué ley de Córdoba regula la profesión del APM?",
+        options: [
+          "La Ley 7186",
+          "La Ley de Tránsito",
+          "La Ley de Alquileres"
+        ],
+        correctIndex: 0,
+        explanation: "La Ley Provincial N° 7186 de la Provincia de Córdoba regula de manera específica el ejercicio profesional de los Agentes de Propaganda Médica (APM), régimen de matriculación y derechos.",
+        cite: "Ley Provincial de Córdoba N° 7186"
+      },
+      {
+        module: "Módulo 4: Unidad 5 - APM y Régimen Laboral",
+        question: "¿Cuál es la jornada máxima de trabajo por día?",
+        options: [
+          "12 horas",
+          "8 horas",
+          "4 horas"
+        ],
+        correctIndex: 1,
+        explanation: "La Ley Nacional 11.544 establece que la duración del trabajo diurno ordinario no puede exceder de 8 horas diarias o 48 horas semanales. Toda fracción superior constituye jornada extraordinaria sujeta a recargo.",
+        cite: "Ley Nacional 11.544 y Art. 196 de la LCT"
+      },
+      {
+        module: "Módulo 4: Unidad 5 - APM y Régimen Laboral",
+        question: "Si despiden al trabajador sin causa justa, ¿qué corresponde?",
+        options: [
+          "Nada, el empleador decide",
+          "Solo un saludo",
+          "Una indemnización"
+        ],
+        correctIndex: 2,
+        explanation: "En virtud de la garantía contra el despido arbitrario (Art. 14 bis CN), el distracto sin causa justa devenga la indemnización por antigüedad (Art. 245 LCT), indemnización sustitutiva de preaviso e integración del mes de despido.",
+        cite: "Art. 245 de la Ley 20.744 y Art. 14 bis CN"
+      }
+    ];
 
     /* ==========================================================
        ESTADO DE LA APLICACIÓN
        ========================================================== */
     const state = {
-      mode: 'team', // 'team', 'solo', 'study'
-      players: [
-        { name: "Integrante 1", round: 1, score: 0, correctCount: 0 },
-        { name: "Integrante 2", round: 2, score: 0, correctCount: 0 },
-        { name: "Integrante 3", round: 3, score: 0, correctCount: 0 },
-        { name: "Integrante 4", round: 4, score: 0, correctCount: 0 }
-      ],
-      currentRoundIndex: 0,
-      currentQuestionIndex: 0,
-      totalScore: 0,
-      streak: 0,
-      maxStreak: 0,
+      participantName: "",
+      currentIndex: 0,
+      score: 0,
+      correctCount: 0,
       answered: false,
-      timer: 15,
+      timer: 20,
       timerInterval: null,
-      shieldActive: false,
-      powerups: {
-        fifty: true,
-        time: true,
-        shield: true
-      },
-      soundEnabled: true,
-      flashcardIndex: 0
+      startTime: null,
+      totalTimeSeconds: 0,
+      currentSubmissionId: null
     };
 
-    /* ==========================================================
-       MOTOR DE AUDIO SINTETIZADO (Web Audio API - Cero Dependencias)
-       ========================================================== */
-    let audioCtx = null;
-
-    function initAudio() {
-      if (!audioCtx) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (AudioContextClass) {
-          audioCtx = new AudioContextClass();
-        }
-      }
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-    }
-
-    function playTone(freq, type, duration, delay = 0, gainLevel = 0.15) {
-      if (!state.soundEnabled) return;
-      try {
-        initAudio();
-        if (!audioCtx) return;
-        setTimeout(() => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = type;
-          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-          gain.gain.setValueAtTime(gainLevel, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + duration);
-        }, delay * 1000);
-      } catch (e) {
-        console.warn('Audio no disponible:', e);
-      }
-    }
-
-    function soundClick() {
-      playTone(480, 'sine', 0.06, 0, 0.08);
-      vibrate(15);
-    }
-
-    function soundCorrect() {
-      playTone(523.25, 'triangle', 0.12, 0, 0.18);      // C5
-      playTone(659.25, 'triangle', 0.14, 0.08, 0.18);   // E5
-      playTone(783.99, 'triangle', 0.18, 0.16, 0.22);   // G5
-      playTone(1046.50, 'sine', 0.35, 0.24, 0.25);     // C6
-      vibrate([25, 40, 35]);
-    }
-
-    function soundWrong() {
-      playTone(280, 'sawtooth', 0.15, 0, 0.18);
-      playTone(210, 'sawtooth', 0.25, 0.12, 0.2);
-      vibrate([60, 50, 80]);
-    }
-
-    function soundFanfare() {
-      const notes = [440, 554, 659, 880, 784, 880];
-      notes.forEach((freq, idx) => {
-        playTone(freq, 'triangle', 0.25, idx * 0.12, 0.2);
-      });
-      vibrate([50, 50, 50, 50, 100]);
-    }
-
-    function soundTick() {
-      playTone(800, 'sine', 0.03, 0, 0.05);
-    }
-
-    function vibrate(pattern) {
-      if ('vibrate' in navigator) {
-        try { navigator.vibrate(pattern); } catch (e) {}
-      }
-    }
+    // Registros locales de respaldo para entornos estáticos o desconectados
+    const LOCAL_BENCHMARK = [
+      { id: '1', name: 'Dr. Alejandro Morales', correctCount: 12, score: 1340, date: '2026-10-18' },
+      { id: '2', name: 'Valeria S. Gómez', correctCount: 12, score: 1280, date: '2026-10-19' },
+      { id: '3', name: 'Lucas Benítez (APM)', correctCount: 11, score: 1190, date: '2026-10-19' },
+      { id: '4', name: 'Martina Rossi', correctCount: 11, score: 1120, date: '2026-10-20' },
+      { id: '5', name: 'Facundo Quiroga', correctCount: 10, score: 980, date: '2026-10-20' }
+    ];
 
     /* ==========================================================
-       MOTOR DE CONFETI EN CANVAS (Cero Dependencias Externas)
+       NAVEGACIÓN ENTRE VISTAS
        ========================================================== */
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx = canvas.getContext('2d');
-    let confettiParticles = [];
-    let confettiAnimId = null;
-
-    function resizeCanvas() {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function triggerConfetti(count = 50) {
-      resizeCanvas();
-      const colors = ['#6366f1', '#a855f7', '#ec4899', '#f59e0b', '#10b981', '#38bdf8', '#fbbf24'];
-      for (let i = 0; i < count; i++) {
-        confettiParticles.push({
-          x: canvas.width / 2 + (Math.random() * 80 - 40),
-          y: canvas.height * 0.35,
-          vx: (Math.random() - 0.5) * 12,
-          vy: -(Math.random() * 10 + 6),
-          size: Math.random() * 8 + 5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          rotation: Math.random() * 360,
-          rotationSpeed: (Math.random() - 0.5) * 12,
-          opacity: 1,
-          decay: Math.random() * 0.015 + 0.008
-        });
-      }
-      if (!confettiAnimId) {
-        animateConfetti();
-      }
-    }
-
-    function animateConfetti() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confettiParticles.forEach((p, idx) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.35; // Gravedad
-        p.vx *= 0.98; // Rozamiento
-        p.rotation += p.rotationSpeed;
-        p.opacity -= p.decay;
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate((p.rotation * Math.PI) / 180);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = Math.max(0, p.opacity);
-        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-        ctx.restore();
-
-        if (p.opacity <= 0 || p.y > canvas.height + 20) {
-          confettiParticles.splice(idx, 1);
-        }
-      });
-
-      if (confettiParticles.length > 0) {
-        confettiAnimId = requestAnimationFrame(animateConfetti);
-      } else {
-        confettiAnimId = null;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-
-    /* ==========================================================
-       CONTROL DE PANTALLAS Y NAVEGACIÓN
-       ========================================================== */
-    function showScreen(screenId) {
-      soundClick();
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      const target = document.getElementById(screenId);
+    function showView(viewId) {
+      document.querySelectorAll('.view-screen').forEach(v => v.classList.remove('active'));
+      const target = document.getElementById(viewId);
       if (target) {
         target.classList.add('active');
       }
-
-      // Visibilidad del header y barra de progreso
-      const progressContainer = document.getElementById('game-progress-bar');
-      if (screenId === 'screen-game') {
-        progressContainer.style.display = 'block';
-      } else {
-        progressContainer.style.display = 'none';
-      }
-    }
-
-    function selectMode(mode) {
-      soundClick();
-      state.mode = mode;
-      document.querySelectorAll('.mode-card').forEach(card => {
-        card.classList.toggle('selected', card.getAttribute('data-mode') === mode);
-      });
-    }
-
-    function startSelectedMode() {
-      initAudio();
-      if (state.mode === 'team') {
-        showScreen('screen-team-setup');
-      } else if (state.mode === 'solo') {
-        beginSoloGame();
-      } else if (state.mode === 'study') {
-        beginStudyMode();
-      }
     }
 
     /* ==========================================================
-       INICIO DE JUEGO (EQUIPO / SOLITARIO)
+       INICIO DE EVALUACIÓN
        ========================================================== */
-    function beginTeamGame() {
-      // Tomar nombres del formulario
-      state.players[0].name = document.getElementById('player-name-1').value.trim() || "Integrante 1";
-      state.players[1].name = document.getElementById('player-name-2').value.trim() || "Integrante 2";
-      state.players[2].name = document.getElementById('player-name-3').value.trim() || "Integrante 3";
-      state.players[3].name = document.getElementById('player-name-4').value.trim() || "Integrante 4";
+    function startEvaluation() {
+      const nameInput = document.getElementById('participant-name');
+      const name = nameInput.value.trim();
 
-      // Reset de estadísticas
-      state.players.forEach(p => { p.score = 0; p.correctCount = 0; });
-      state.totalScore = 0;
-      state.streak = 0;
-      state.maxStreak = 0;
-      state.currentRoundIndex = 0;
-      state.currentQuestionIndex = 0;
+      if (!name) {
+        nameInput.focus();
+        nameInput.style.borderColor = 'var(--error-text)';
+        return;
+      }
 
-      updateScoreDisplay();
-      showPassPhoneScreen(0);
-    }
+      state.participantName = name;
+      state.currentIndex = 0;
+      state.score = 0;
+      state.correctCount = 0;
+      state.startTime = Date.now();
+      state.currentSubmissionId = 'sub_' + Date.now();
 
-    function beginSoloGame() {
-      state.players = [{ name: "Tú", round: 1, score: 0, correctCount: 0 }];
-      state.totalScore = 0;
-      state.streak = 0;
-      state.maxStreak = 0;
-      state.currentRoundIndex = 0;
-      state.currentQuestionIndex = 0;
-      updateScoreDisplay();
-      startRound(0);
-    }
-
-    function showPassPhoneScreen(roundIndex) {
-      const player = state.players[roundIndex];
-      const round = GAME_DATA.rounds[roundIndex];
-
-      document.getElementById('pass-next-player').innerText = player.name;
-      document.getElementById('pass-next-round').innerText = `Ronda ${round.id}: ${round.title}`;
-      document.getElementById('pass-round-desc').innerText = round.description;
-
-      showScreen('screen-pass-phone');
-      triggerConfetti(25);
-    }
-
-    function proceedAfterPass() {
-      startRound(state.currentRoundIndex);
-    }
-
-    function startRound(roundIndex) {
-      state.currentRoundIndex = roundIndex;
-      state.currentQuestionIndex = 0;
-      updateRoundDots();
-      showScreen('screen-game');
+      document.getElementById('quiz-participant-display').innerText = state.participantName;
+      showView('view-quiz');
       loadQuestion();
     }
 
-    function updateRoundDots() {
-      for (let i = 1; i <= 4; i++) {
-        const dot = document.getElementById(`dot-round-${i}`);
-        dot.className = 'round-dot';
-        if (i - 1 < state.currentRoundIndex) {
-          dot.classList.add('completed');
-        } else if (i - 1 === state.currentRoundIndex) {
-          dot.classList.add('active');
-        }
-      }
-    }
-
     /* ==========================================================
-       LÓGICA DE PREGUNTAS Y TEMPORIZADOR
+       CARGA Y RESOLUCIÓN DE PREGUNTAS
        ========================================================== */
     function loadQuestion() {
-      const currentRound = GAME_DATA.rounds[state.currentRoundIndex];
-      const q = currentRound.questions[state.currentQuestionIndex];
-      const currentPlayer = state.mode === 'team' ? state.players[state.currentRoundIndex] : state.players[0];
-
       state.answered = false;
-      state.shieldActive = false;
+      const q = EVAL_DATA[state.currentIndex];
+      const total = EVAL_DATA.length;
 
-      // Actualizar meta en pantalla
-      document.getElementById('current-player-tag').innerText = `👤 ${currentPlayer.name} • R${currentRound.id}`;
-      document.getElementById('question-badge').innerText = `Ronda ${currentRound.id} • Pregunta ${state.currentQuestionIndex + 1} de 3`;
-      document.getElementById('question-text').innerText = q.question;
+      // Actualizar indicadores
+      document.getElementById('quiz-module-badge').innerText = q.module;
+      document.getElementById('quiz-counter').innerText = `Pregunta ${state.currentIndex + 1} de ${total}`;
+      document.getElementById('quiz-progress-fill').style.width = `${((state.currentIndex + 1) / total) * 100}%`;
+      document.getElementById('quiz-score-display').innerText = `${state.score} pts`;
+      document.getElementById('quiz-question-text').innerText = q.question;
 
-      // Mascota
-      setMascot('normal', `¡Fuerza ${currentPlayer.name}! Esta pregunta vale 100 puntos.`);
-
-      // Resetear comodines en UI
-      document.getElementById('powerup-fifty').disabled = !state.powerups.fifty;
-      document.getElementById('powerup-time').disabled = !state.powerups.time;
-      document.getElementById('powerup-shield').disabled = !state.powerups.shield;
-
-      // Ocultar explicación y botón siguiente
-      document.getElementById('explanation-panel').classList.remove('active');
-      document.getElementById('btn-next-question').style.display = 'none';
+      // Ocultar feedback y botón siguiente
+      document.getElementById('legal-feedback-box').classList.remove('active');
+      document.getElementById('btn-next-step').style.display = 'none';
 
       // Renderizar opciones
-      const optionsContainer = document.getElementById('options-grid');
-      optionsContainer.innerHTML = '';
-
+      const container = document.getElementById('quiz-options-group');
+      container.innerHTML = '';
       const letters = ['A', 'B', 'C'];
+
       q.options.forEach((optText, idx) => {
         const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.id = `opt-${idx}`;
+        btn.className = 'option-item';
+        btn.id = `opt-btn-${idx}`;
         btn.innerHTML = `
-          <div class="option-letter">${letters[idx]}</div>
-          <div class="option-text">${optText}</div>
+          <div class="option-prefix">${letters[idx]}</div>
+          <div class="option-label">${optText}</div>
         `;
         btn.onclick = () => selectOption(idx);
-        optionsContainer.appendChild(btn);
+        container.appendChild(btn);
       });
 
-      // Iniciar timer
+      // Iniciar cuenta regresiva
       startTimer();
     }
 
     function startTimer() {
       clearInterval(state.timerInterval);
-      state.timer = 15;
-      updateTimerDisplay();
+      state.timer = 20;
+      updateTimerUI();
 
       state.timerInterval = setInterval(() => {
         state.timer--;
-        updateTimerDisplay();
-
-        if (state.timer <= 4 && state.timer > 0) {
-          soundTick();
-        }
+        updateTimerUI();
 
         if (state.timer <= 0) {
           clearInterval(state.timerInterval);
-          timeOutQuestion();
+          selectOption(-1); // Tiempo agotado
         }
       }, 1000);
     }
 
-    function updateTimerDisplay() {
-      const display = document.getElementById('timer-display');
-      display.innerText = `${state.timer}s`;
-      if (state.timer <= 4) {
-        display.style.color = '#ef4444';
-      } else if (state.timer <= 8) {
-        display.style.color = '#f59e0b';
+    function updateTimerUI() {
+      const el = document.getElementById('quiz-timer');
+      el.innerText = `${state.timer}s`;
+      if (state.timer <= 5) {
+        el.classList.add('warning');
       } else {
-        display.style.color = '#38bdf8';
+        el.classList.remove('warning');
       }
     }
 
@@ -1806,368 +1157,218 @@
       state.answered = true;
       clearInterval(state.timerInterval);
 
-      const currentRound = GAME_DATA.rounds[state.currentRoundIndex];
-      const q = currentRound.questions[state.currentQuestionIndex];
+      const q = EVAL_DATA[state.currentIndex];
       const isCorrect = selectedIdx === q.correctIndex;
-      const currentPlayer = state.mode === 'team' ? state.players[state.currentRoundIndex] : state.players[0];
 
-      // Bloquear todas las opciones
-      const allBtns = document.querySelectorAll('.option-btn');
-      allBtns.forEach((btn, idx) => {
+      // Deshabilitar y colorear opciones
+      const buttons = document.querySelectorAll('.option-item');
+      buttons.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === q.correctIndex) {
-          btn.classList.add('correct');
+          btn.classList.add('selected-correct');
         } else if (idx === selectedIdx && !isCorrect) {
-          btn.classList.add('wrong');
+          btn.classList.add('selected-incorrect');
         } else {
-          btn.classList.add('dimmed');
+          btn.classList.add('faded');
         }
       });
 
-      // Cálculo de puntos
+      // Cálculo de puntaje
       if (isCorrect) {
-        soundCorrect();
-        triggerConfetti(35);
-        state.streak++;
-        if (state.streak > state.maxStreak) state.maxStreak = state.streak;
-
+        state.correctCount++;
         const timeBonus = Math.max(0, state.timer * 4);
-        const streakBonus = (state.streak - 1) * 20;
-        const earned = 100 + timeBonus + streakBonus;
-
-        state.totalScore += earned;
-        currentPlayer.score += earned;
-        currentPlayer.correctCount++;
-
-        setMascot('happy', q.mascotRight);
-      } else {
-        soundWrong();
-        if (state.shieldActive) {
-          setMascot('shield', '🛡️ ¡El Escudo Legal salvó tu racha de puntos!');
-        } else {
-          state.streak = 0;
-          setMascot('sad', q.mascotWrong);
-        }
+        state.score += (100 + timeBonus);
+        document.getElementById('quiz-score-display').innerText = `${state.score} pts`;
       }
 
-      updateScoreDisplay();
-      showExplanation(q, isCorrect);
+      // Mostrar fundamento legal
+      showLegalFeedback(q, isCorrect);
 
-      // Mostrar botón siguiente
-      const nextBtn = document.getElementById('btn-next-question');
-      const isLastQuestionInRound = state.currentQuestionIndex === currentRound.questions.length - 1;
-      const isLastRound = state.currentRoundIndex === GAME_DATA.rounds.length - 1;
-
-      if (isLastQuestionInRound && isLastRound) {
-        document.getElementById('btn-next-label').innerText = 'Ver Resultados Finales 🏆';
-      } else if (isLastQuestionInRound) {
-        document.getElementById('btn-next-label').innerText = 'Terminar Ronda ➡';
-      } else {
-        document.getElementById('btn-next-label').innerText = 'Siguiente Pregunta ➡';
-      }
+      // Botón siguiente
+      const nextBtn = document.getElementById('btn-next-step');
+      const isLast = state.currentIndex === EVAL_DATA.length - 1;
+      document.getElementById('btn-next-label').innerText = isLast ? 'Finalizar y Ver Resultados' : 'Siguiente Pregunta';
       nextBtn.style.display = 'flex';
     }
 
-    function timeOutQuestion() {
-      if (state.answered) return;
-      selectOption(-1); // Responde sin opción seleccionada (tiempo agotado)
-    }
+    function showLegalFeedback(question, isCorrect) {
+      const box = document.getElementById('legal-feedback-box');
+      const title = document.getElementById('feedback-status-title');
+      const text = document.getElementById('feedback-text');
+      const cite = document.getElementById('feedback-cite');
 
-    function showExplanation(question, isCorrect) {
-      const panel = document.getElementById('explanation-panel');
-      const title = document.getElementById('explanation-title');
-      const text = document.getElementById('explanation-text');
-      const ref = document.getElementById('explanation-ref');
-
-      title.innerText = isCorrect ? '¡Fundamento Correcto!' : 'Fundamento Jurídico';
-      title.style.color = isCorrect ? '#34d399' : '#f87171';
+      title.innerText = isCorrect ? 'Respuesta Correcta' : 'Respuesta Incorrecta';
+      title.style.color = isCorrect ? 'var(--success-text)' : 'var(--error-text)';
       text.innerText = question.explanation;
-      ref.innerText = `📖 ${question.reference}`;
+      cite.innerText = `Referencia: ${question.cite}`;
 
-      panel.classList.add('active');
+      box.classList.add('active');
     }
 
-    function nextQuestion() {
-      soundClick();
-      const currentRound = GAME_DATA.rounds[state.currentRoundIndex];
-
-      if (state.currentQuestionIndex < currentRound.questions.length - 1) {
-        state.currentQuestionIndex++;
+    function handleNextQuestion() {
+      if (state.currentIndex < EVAL_DATA.length - 1) {
+        state.currentIndex++;
         loadQuestion();
       } else {
-        // Fin de la ronda
-        if (state.currentRoundIndex < GAME_DATA.rounds.length - 1) {
-          state.currentRoundIndex++;
-          if (state.mode === 'team') {
-            showPassPhoneScreen(state.currentRoundIndex);
-          } else {
-            startRound(state.currentRoundIndex);
+        finishEvaluation();
+      }
+    }
+
+    /* ==========================================================
+       FINALIZACIÓN, RESULTADOS Y COMUNICACIÓN CON BACKEND
+       ========================================================== */
+    async function finishEvaluation() {
+      state.totalTimeSeconds = Math.round((Date.now() - state.startTime) / 1000);
+      const totalQuestions = EVAL_DATA.length;
+      const percentage = Math.round((state.correctCount / totalQuestions) * 100);
+
+      // Actualizar tarjeta resumen
+      document.getElementById('result-name').innerText = state.participantName;
+      document.getElementById('result-correct-count').innerText = `${state.correctCount} / ${totalQuestions}`;
+      document.getElementById('result-score-value').innerText = state.score.toLocaleString('es-AR');
+      document.getElementById('result-percentage').innerText = `${percentage}%`;
+
+      const verdictEl = document.getElementById('result-verdict');
+      if (percentage === 100) {
+        verdictEl.innerText = "Dictamen: Aprobado con Distinción Sobresaliente";
+        verdictEl.style.color = "var(--primary-blue)";
+      } else if (percentage >= 75) {
+        verdictEl.innerText = "Dictamen: Aprobado Satisfactoriamente";
+        verdictEl.style.color = "var(--success-text)";
+      } else {
+        verdictEl.innerText = "Dictamen: No Alcanzó el Puntaje Mínimo Requerido";
+        verdictEl.style.color = "var(--error-text)";
+      }
+
+      showView('view-results');
+
+      // Enviar resultado al backend integrado (/api/scores)
+      await syncScoreWithBackend();
+    }
+
+    /* ==========================================================
+       INTEGRACIÓN BACKEND /API/SCORES (VERCEL SERVERLESS + FALLBACK)
+       ========================================================== */
+    async function syncScoreWithBackend() {
+      const payload = {
+        name: state.participantName,
+        correctCount: state.correctCount,
+        totalQuestions: EVAL_DATA.length,
+        score: state.score,
+        timeTaken: state.totalTimeSeconds
+      };
+
+      let scoresList = [];
+
+      try {
+        // Intento de envío a Vercel Serverless Function
+        const response = await fetch('/api/scores', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.topScores) {
+            scoresList = data.topScores;
+            document.getElementById('backend-status-tag').innerText = "Vercel API Online";
           }
         } else {
-          // Fin del juego completo
-          finishGame();
+          throw new Error('Respuesta no satisfactoria de la API');
         }
+      } catch (err) {
+        // Fallback a almacenamiento local persistente
+        console.warn('API no disponible en este entorno, utilizando almacenamiento local:', err);
+        document.getElementById('backend-status-tag').innerText = "Modo Local";
+        scoresList = saveScoreLocally(payload);
       }
+
+      renderLeaderboard(scoresList);
     }
 
-    /* ==========================================================
-       COMODINES / AYUDITAS
-       ========================================================== */
-    function usePowerupFifty() {
-      if (state.answered || !state.powerups.fifty) return;
-      soundClick();
-      state.powerups.fifty = false;
-      document.getElementById('powerup-fifty').disabled = true;
-
-      const currentRound = GAME_DATA.rounds[state.currentRoundIndex];
-      const q = currentRound.questions[state.currentQuestionIndex];
-
-      // Buscar opciones incorrectas
-      const wrongIndices = [0, 1, 2].filter(idx => idx !== q.correctIndex);
-      const toHide = wrongIndices[Math.floor(Math.random() * wrongIndices.length)];
-
-      const btn = document.getElementById(`opt-${toHide}`);
-      if (btn) {
-        btn.classList.add('dimmed');
-        btn.style.opacity = '0.2';
+    function saveScoreLocally(payload) {
+      let saved = [];
+      try {
+        const stored = localStorage.getItem('eval_scores_db');
+        saved = stored ? JSON.parse(stored) : [...LOCAL_BENCHMARK];
+      } catch (e) {
+        saved = [...LOCAL_BENCHMARK];
       }
-      setMascot('normal', '💡 ¡50/50 activado! Descartamos una opción incorrecta.');
+
+      saved.push({
+        id: state.currentSubmissionId,
+        name: payload.name,
+        correctCount: payload.correctCount,
+        totalQuestions: payload.totalQuestions,
+        score: payload.score,
+        date: new Date().toISOString().split('T')[0]
+      });
+
+      // Ordenar por aciertos y luego por puntaje
+      saved.sort((a, b) => {
+        if (b.correctCount !== a.correctCount) {
+          return b.correctCount - a.correctCount;
+        }
+        return b.score - a.score;
+      });
+
+      try {
+        localStorage.setItem('eval_scores_db', JSON.stringify(saved.slice(0, 30)));
+      } catch (e) {}
+
+      return saved.slice(0, 10);
     }
 
-    function usePowerupTime() {
-      if (state.answered || !state.powerups.time) return;
-      soundClick();
-      state.powerups.time = false;
-      document.getElementById('powerup-time').disabled = true;
+    function renderLeaderboard(list) {
+      const tbody = document.getElementById('leaderboard-tbody');
+      tbody.innerHTML = '';
 
-      state.timer += 10;
-      updateTimerDisplay();
-      setMascot('happy', '⏳ ¡+10 segundos adicionales añadidos al reloj!');
-    }
-
-    function usePowerupShield() {
-      if (state.answered || !state.powerups.shield) return;
-      soundClick();
-      state.powerups.shield = false;
-      state.shieldActive = true;
-      document.getElementById('powerup-shield').disabled = true;
-
-      setMascot('shield', '🛡️ ¡Escudo Legal activo! Tu racha no caerá en esta pregunta.');
-    }
-
-    /* ==========================================================
-       CONTROL DE MASCOTA JUSTI
-       ========================================================== */
-    function setMascot(emotion, message) {
-      const face = document.getElementById('mascot-face');
-      const tag = document.getElementById('mascot-tag');
-      const bubble = document.getElementById('mascot-text');
-
-      bubble.innerText = message;
-      if (emotion === 'happy') {
-        face.innerText = '🤩';
-        tag.innerText = '¡DON JUSTO FESTEJA!';
-        tag.style.color = '#10b981';
-      } else if (emotion === 'sad') {
-        face.innerText = '🤦‍♂️';
-        tag.innerText = '¡DON JUSTO SE LAMENTA!';
-        tag.style.color = '#ef4444';
-      } else if (emotion === 'shield') {
-        face.innerText = '🛡️';
-        tag.innerText = 'PROTEGIDO POR LA LEY';
-        tag.style.color = '#38bdf8';
-      } else {
-        face.innerText = '👨‍⚖️';
-        tag.innerText = 'CONSEJO DE DON JUSTO';
-        tag.style.color = '#a855f7';
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-subtle); padding: 14px;">No hay registros disponibles.</td></tr>`;
+        return;
       }
-    }
 
-    /* ==========================================================
-       ACTUALIZACIÓN DE PUNTAJES Y HEADER
-       ========================================================== */
-    function updateScoreDisplay() {
-      document.getElementById('header-score').innerText = `${state.totalScore} pts`;
+      list.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        const isCurrent = item.name === state.participantName && (item.score === state.score || item.id === state.currentSubmissionId);
+        
+        if (isCurrent) {
+          tr.className = 'user-row';
+        }
 
-      const streakPill = document.getElementById('streak-pill');
-      if (state.streak >= 2) {
-        streakPill.style.display = 'inline-flex';
-        document.getElementById('header-streak').innerText = `🔥 x${state.streak} Racha`;
-      } else {
-        streakPill.style.display = 'none';
-      }
-    }
-
-    /* ==========================================================
-       PANTALLA DE RESULTADOS FINALES Y PODIO
-       ========================================================== */
-    function finishGame() {
-      soundFanfare();
-      triggerConfetti(90);
-
-      document.getElementById('results-total-score').innerText = state.totalScore;
-      const podiumContainer = document.getElementById('podium-list');
-      podiumContainer.innerHTML = '';
-
-      // Ordenar jugadores por puntaje
-      const sortedPlayers = [...state.players].sort((a, b) => b.score - a.score);
-      const medals = ['🥇', '🥈', '🥉', '🎖️'];
-
-      sortedPlayers.forEach((player, idx) => {
-        const item = document.createElement('div');
-        item.className = 'podium-item';
-        item.innerHTML = `
-          <div class="podium-left">
-            <span class="podium-rank">${medals[idx] || '🎖️'}</span>
-            <div>
-              <div class="podium-name">${player.name}</div>
-              <div class="podium-sub">${player.correctCount} de 3 correctas</div>
-            </div>
-          </div>
-          <div class="podium-score">${player.score} pts</div>
+        tr.innerHTML = `
+          <td class="col-rank">${idx + 1}</td>
+          <td>
+            ${item.name}
+            ${isCurrent ? '<span class="badge-you">TÚ</span>' : ''}
+          </td>
+          <td style="text-align: center; font-weight: 600;">${item.correctCount} / 12</td>
+          <td class="col-score">${item.score.toLocaleString('es-AR')}</td>
         `;
-        podiumContainer.appendChild(item);
+        tbody.appendChild(tr);
       });
-
-      // Feedback del equipo
-      const feedbackEl = document.getElementById('results-feedback');
-      const badgeEl = document.getElementById('results-badge');
-      const titleEl = document.getElementById('results-title');
-
-      if (state.totalScore >= 1200) {
-        badgeEl.innerText = '👑';
-        titleEl.innerText = '¡Corte Suprema de Justicia!';
-        feedbackEl.innerText = '¡Desempeño perfecto y supremo! Dominan la Constitución Nacional, el Art. 14 bis y la Ley 20.744 como verdaderos jueces.';
-      } else if (state.totalScore >= 800) {
-        badgeEl.innerText = '🏆';
-        titleEl.innerText = '¡Abogados Laboralistas Pro!';
-        feedbackEl.innerText = '¡Muy buen trabajo en equipo! Tienen bien claros los principios laborales y la normativa de Córdoba.';
-      } else {
-        badgeEl.innerText = '📚';
-        titleEl.innerText = '¡A Repasar el Machete!';
-        feedbackEl.innerText = 'Tuvieron buenos aciertos, pero vale la pena usar el modo Flashcards para repasar antes del examen.';
-      }
-
-      showScreen('screen-results');
     }
 
-    function restartGame() {
-      state.powerups.fifty = true;
-      state.powerups.time = true;
-      state.powerups.shield = true;
-      if (state.mode === 'team') {
-        beginTeamGame();
-      } else {
-        beginSoloGame();
-      }
+    function restartEvaluation() {
+      document.getElementById('participant-name').value = '';
+      showView('view-intro');
     }
 
-    /* ==========================================================
-       MODO FLASHCARDS (ESTUDIO / MACHETE)
-       ========================================================== */
-    // Aplanar todas las preguntas en una lista simple de 12 tarjetas
-    const allQuestionsFlat = [];
-    GAME_DATA.rounds.forEach(r => {
-      r.questions.forEach(q => {
-        allQuestionsFlat.push({
-          ...q,
-          roundTitle: r.title,
-          roundId: r.id
-        });
-      });
-    });
+    function copyResultSummary() {
+      const text = `EVALUACIÓN DE LEGISLACIÓN LABORAL ARGENTINA\n` +
+                   `Participante: ${state.participantName}\n` +
+                   `Aciertos: ${state.correctCount} de 12 preguntas (${Math.round((state.correctCount / 12) * 100)}%)\n` +
+                   `Puntaje Obtenido: ${state.score} pts\n` +
+                   `Fecha: ${new Date().toLocaleDateString('es-AR')}`;
 
-    function beginStudyMode() {
-      state.flashcardIndex = 0;
-      loadFlashcard(0);
-      showScreen('screen-flashcards');
-    }
-
-    function loadFlashcard(index) {
-      const card = allQuestionsFlat[index];
-      const inner = document.getElementById('flashcard-inner');
-      inner.classList.remove('flipped');
-
-      document.getElementById('fc-counter').innerText = `Tarjeta ${index + 1} de ${allQuestionsFlat.length}`;
-      document.getElementById('fc-round-badge').innerText = `Ronda ${card.roundId} • ${card.roundTitle}`;
-      document.getElementById('fc-question').innerText = card.question;
-      document.getElementById('fc-answer').innerText = card.options[card.correctIndex];
-      document.getElementById('fc-explanation').innerText = card.explanation;
-      document.getElementById('fc-ref').innerText = `📖 ${card.reference}`;
-    }
-
-    function flipFlashcard() {
-      soundClick();
-      const inner = document.getElementById('flashcard-inner');
-      inner.classList.toggle('flipped');
-    }
-
-    function nextFlashcard() {
-      soundClick();
-      if (state.flashcardIndex < allQuestionsFlat.length - 1) {
-        state.flashcardIndex++;
-        loadFlashcard(state.flashcardIndex);
-      } else {
-        state.flashcardIndex = 0;
-        loadFlashcard(0);
-      }
-    }
-
-    function prevFlashcard() {
-      soundClick();
-      if (state.flashcardIndex > 0) {
-        state.flashcardIndex--;
-        loadFlashcard(state.flashcardIndex);
-      }
-    }
-
-    /* ==========================================================
-       COMPARTIR EN WHATSAPP
-       ========================================================== */
-    function shareOnWhatsApp() {
-      soundClick();
-      let text = `⚖️ ¡Acabamos de jugar a "Derecho al Toque" (Trivia de Legislación Laboral Argentina)!\n\n`;
-      text += `🏆 Puntaje total: ${state.totalScore} pts\n`;
-      if (state.mode === 'team') {
-        text += `👥 Equipo:\n`;
-        state.players.forEach(p => {
-          text += `• ${p.name}: ${p.score} pts (${p.correctCount}/3)\n`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.getElementById('btn-copy-label');
+          btn.innerText = "¡Copiado con éxito!";
+          setTimeout(() => { btn.innerText = "Copiar Reporte Formal"; }, 2500);
         });
       }
-      text += `\n¿Te animás a superarnos? ¡Jugá acá!`;
-
-      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank');
-    }
-
-    /* ==========================================================
-       SONIDO Y MODAL INFO
-       ========================================================== */
-    document.getElementById('btn-sound-toggle').addEventListener('click', () => {
-      state.soundEnabled = !state.soundEnabled;
-      document.getElementById('btn-sound-toggle').innerText = state.soundEnabled ? '🔊' : '🔇';
-      soundClick();
-    });
-
-    document.getElementById('btn-info').addEventListener('click', () => {
-      soundClick();
-      document.getElementById('modal-info').classList.add('active');
-    });
-
-    function closeModal(id) {
-      soundClick();
-      document.getElementById(id).classList.remove('active');
-    }
-
-    // Inicializar audio en primer toque de pantalla
-    window.addEventListener('touchstart', () => { initAudio(); }, { once: true });
-    window.addEventListener('click', () => { initAudio(); }, { once: true });
-
-    // Registrar Service Worker para soporte offline
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
     }
   </script>
 </body>

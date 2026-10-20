@@ -1,0 +1,17 @@
+{
+  "name": "trivia-legislacion-laboral",
+  "version": "2.0.0",
+  "description": "Evaluación Profesional e Interactiva de Legislación General y Laboral Argentina",
+  "type": "module",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "evaluacion",
+    "legislacion-laboral",
+    "argentina",
+    "vercel"
+  ],
+  "author": "simonolocco",
+  "license": "MIT"
+}
