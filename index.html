@@ -1041,14 +1041,8 @@
       currentSubmissionId: null
     };
 
-    // Registros locales de respaldo para entornos estáticos o desconectados
-    const LOCAL_BENCHMARK = [
-      { id: '1', name: 'Dr. Alejandro Morales', correctCount: 12, score: 1340, date: '2026-10-18' },
-      { id: '2', name: 'Valeria S. Gómez', correctCount: 12, score: 1280, date: '2026-10-19' },
-      { id: '3', name: 'Lucas Benítez (APM)', correctCount: 11, score: 1190, date: '2026-10-19' },
-      { id: '4', name: 'Martina Rossi', correctCount: 11, score: 1120, date: '2026-10-20' },
-      { id: '5', name: 'Facundo Quiroga', correctCount: 10, score: 980, date: '2026-10-20' }
-    ];
+    // Registros locales limpios para participantes reales
+    const LOCAL_BENCHMARK = [];
 
     /* ==========================================================
        NAVEGACIÓN ENTRE VISTAS
@@ -1325,7 +1319,7 @@
       tbody.innerHTML = '';
 
       if (!list || list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-subtle); padding: 14px;">No hay registros disponibles.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-subtle); padding: 18px;">No hay registros aún. Sé el primero en completar la evaluación.</td></tr>`;
         return;
       }
 

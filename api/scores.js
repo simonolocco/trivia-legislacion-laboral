@@ -1,13 +1,8 @@
 // api/scores.js - Vercel Serverless Function
 // Almacena y retorna las mejores puntuaciones para la evaluación de Legislación Laboral
 
-let leaderboard = [
-  { id: '1', name: 'Dr. Alejandro Morales', correctCount: 12, totalQuestions: 12, score: 1340, date: '2026-10-18' },
-  { id: '2', name: 'Valeria S. Gómez', correctCount: 12, totalQuestions: 12, score: 1280, date: '2026-10-19' },
-  { id: '3', name: 'Lucas Benítez (APM)', correctCount: 11, totalQuestions: 12, score: 1190, date: '2026-10-19' },
-  { id: '4', name: 'Martina Rossi', correctCount: 11, totalQuestions: 12, score: 1120, date: '2026-10-20' },
-  { id: '5', name: 'Facundo Quiroga', correctCount: 10, totalQuestions: 12, score: 980, date: '2026-10-20' }
-];
+// Base de datos en memoria para registrar a los participantes reales
+let leaderboard = [];
 
 export default async function handler(req, res) {
   // Configuración de encabezados CORS y Cache
