@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#9333ea" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047" />
+      <stop offset="100%" stop-color="#eab308" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#grad)" />
+  <circle cx="256" cy="120" r="28" fill="url(#gold)" />
+  <path d="M256 148 L256 380" stroke="url(#gold)" stroke-width="16" stroke-linecap="round" />
+  <path d="M180 380 L332 380" stroke="url(#gold)" stroke-width="20" stroke-linecap="round" />
+  <path d="M140 180 L372 180" stroke="url(#gold)" stroke-width="14" stroke-linecap="round" />
+  <!-- Balanza Izquierda -->
+  <path d="M140 180 L100 260 M140 180 L180 260" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round" />
+  <path d="M80 260 Q140 300 200 260 Z" fill="url(#gold)" />
+  <!-- Balanza Derecha -->
+  <path d="M372 180 L332 260 M372 180 L412 260" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round" />
+  <path d="M312 260 Q372 300 432 260 Z" fill="url(#gold)" />
+</svg>
