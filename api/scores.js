@@ -4,11 +4,20 @@
 // Base de datos en memoria para registrar a los participantes reales
 let leaderboard = [];
 
+function sortScores(list) {
+  return [...list].sort((a, b) => {
+    if (b.correctCount !== a.correctCount) return b.correctCount - a.correctCount;
+    if (b.score !== a.score) return b.score - a.score;
+    return (a.timeTaken || 0) - (b.timeTaken || 0);
+  });
+}
+
 export default async function handler(req, res) {
   // Configuración de encabezados CORS y Cache
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Cache-Control', 'no-store');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -16,12 +25,7 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
-      const sorted = [...leaderboard].sort((a, b) => {
-        if (b.correctCount !== a.correctCount) {
-          return b.correctCount - a.correctCount;
-        }
-        return b.score - a.score;
-      });
+      const sorted = sortScores(leaderboard);
 
       return res.status(200).json({
         success: true,
@@ -43,34 +47,32 @@ export default async function handler(req, res) {
         body = {};
       }
 
-      const { name, correctCount, totalQuestions = 12, score = 0, timeTaken = 0 } = body;
+      const { name, correctCount, score = 0, timeTaken = 0, unit = 'all' } = body;
 
       if (!name || typeof name !== 'string' || name.trim().length === 0) {
         return res.status(400).json({ success: false, error: 'El nombre es requerido' });
       }
 
-      const cleanName = name.trim().slice(0, 40);
+      const cleanName = name.replace(/\s+/g, ' ').trim().slice(0, 40);
       const parsedCorrect = Math.min(12, Math.max(0, parseInt(correctCount, 10) || 0));
-      const parsedScore = Math.max(0, parseInt(score, 10) || 0);
+      // 12 preguntas x 300 puntos como máximo por pregunta
+      const parsedScore = Math.min(3600, Math.max(0, parseInt(score, 10) || 0));
+      const cleanUnit = ['all', '4', '5'].includes(String(unit)) ? String(unit) : 'all';
 
       const newEntry = {
-        id: Date.now().toString(),
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
         name: cleanName,
         correctCount: parsedCorrect,
         totalQuestions: 12,
         score: parsedScore,
-        timeTaken: Math.round(Number(timeTaken) || 0),
+        timeTaken: Math.max(0, Math.round(Number(timeTaken) || 0)),
+        unit: cleanUnit,
         date: new Date().toISOString().split('T')[0]
       };
 
       leaderboard.push(newEntry);
 
-      const sorted = [...leaderboard].sort((a, b) => {
-        if (b.correctCount !== a.correctCount) {
-          return b.correctCount - a.correctCount;
-        }
-        return b.score - a.score;
-      });
+      const sorted = sortScores(leaderboard);
 
       leaderboard = sorted.slice(0, 50);
       const rank = sorted.findIndex(item => item.id === newEntry.id) + 1;
@@ -116,12 +118,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, error: 'Se requiere ID o parámetro clearAll' });
       }
 
-      const sorted = [...leaderboard].sort((a, b) => {
-        if (b.correctCount !== a.correctCount) {
-          return b.correctCount - a.correctCount;
-        }
-        return b.score - a.score;
-      });
+      const sorted = sortScores(leaderboard);
 
       return res.status(200).json({
         success: true,

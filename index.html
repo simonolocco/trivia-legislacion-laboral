@@ -2,1552 +2,172 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Evaluación de Legislación Laboral | Sistema de Certificación</title>
-
-  <!-- PWA & Mobile Meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Derecho al Toque</title>
+  <meta name="description" content="Trivia de Legislación General, Unidades 4 y 5: derechos fundamentales, contrato de trabajo, Ley 7186 y despido.">
   <meta name="theme-color" content="#0f2e5a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="description" content="Plataforma de evaluación profesional e individual sobre Legislación General y Laboral Argentina.">
-
-  <!-- Tipografía Inter -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --primary-navy: #0f2e5a;
-      --primary-blue: #1e40af;
-      --accent-blue: #2563eb;
-      --hover-blue: #1d4ed8;
-      --light-blue: #eff6ff;
-      --border-blue: #bfdbfe;
-      
-      --bg-page: #f8fafc;
-      --surface: #ffffff;
-      
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-subtle: #64748b;
-      
-      --border-color: #e2e8f0;
-      --border-focus: #3b82f6;
-      
-      --success-bg: #f0fdf4;
-      --success-border: #86efac;
-      --success-text: #166534;
-      
-      --error-bg: #fef2f2;
-      --error-border: #fca5a5;
-      --error-text: #991b1b;
-      
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background-color: var(--bg-page);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px 12px;
-    }
-
-    /* Contenedor principal responsive (tipo app móvil en desktop, full width en cel) */
-    .app-container {
-      width: 100%;
-      max-width: 520px;
-      background: var(--surface);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 90vh;
-    }
-
-    /* Barra Superior Institucional */
-    .app-header {
-      background: var(--primary-navy);
-      color: #ffffff;
-      padding: 18px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 3px solid var(--accent-blue);
-    }
-
-    .header-branding {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .header-logo {
-      width: 36px;
-      height: 36px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-    }
-
-    .header-titles h1 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-      line-height: 1.2;
-    }
-
-    .header-titles p {
-      font-size: 0.75rem;
-      color: #93c5fd;
-      font-weight: 500;
-    }
-
-    /* Contenedor de Vistas / Pantallas */
-    .app-body {
-      flex: 1;
-      padding: 24px 22px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .view-screen {
-      display: none;
-      flex-direction: column;
-      flex: 1;
-      width: 100%;
-    }
-
-    .view-screen.active {
-      display: flex;
-      animation: fadeIn 0.25s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Pantalla 1: Formulario de Inicio */
-    .intro-banner {
-      background: var(--light-blue);
-      border: 1px solid var(--border-blue);
-      border-radius: 14px;
-      padding: 16px 18px;
-      margin-bottom: 22px;
-    }
-
-    .intro-banner h2 {
-      font-size: 1.05rem;
-      color: var(--primary-navy);
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .intro-banner p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-
-    .features-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .features-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.35;
-    }
-
-    .bullet-icon {
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      background: #e0f2fe;
-      color: #0369a1;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: bold;
-      margin-top: 1px;
-    }
-
-    .form-group {
-      margin-bottom: 24px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-main);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 12px;
-      font-size: 0.95rem;
-      color: var(--text-main);
-      outline: none;
-      transition: all 0.2s ease;
-      background: #ffffff;
-    }
-
-    .form-input:focus {
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-    }
-
-    /* Botones primarios y secundarios */
-    .btn-primary {
-      background: var(--accent-blue);
-      color: #ffffff;
-      border: none;
-      border-radius: 12px;
-      padding: 15px 22px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s, transform 0.1s;
-      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
-      width: 100%;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      background: var(--hover-blue);
-    }
-
-    .btn-primary:active:not(:disabled) {
-      transform: scale(0.99);
-    }
-
-    .btn-primary:disabled {
-      background: #94a3b8;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .btn-secondary {
-      background: #ffffff;
-      color: var(--text-muted);
-      border: 1.5px solid var(--border-color);
-      border-radius: 12px;
-      padding: 14px 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s;
-      width: 100%;
-    }
-
-    .btn-secondary:hover {
-      background: #f1f5f9;
-      color: var(--text-main);
-    }
-
-    /* Pantalla 2: Pregunta & Evaluación */
-    .eval-meta-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-subtle);
-    }
-
-    .badge-round {
-      background: var(--light-blue);
-      color: var(--primary-blue);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      border: 1px solid var(--border-blue);
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 6px;
-      background: #e2e8f0;
-      border-radius: 999px;
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--accent-blue);
-      transition: width 0.3s ease;
-      width: 8%;
-    }
-
-    .status-ribbon {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 8px 14px;
-      margin-bottom: 18px;
-      font-size: 0.8rem;
-    }
-
-    .status-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .status-item strong {
-      color: var(--text-main);
-    }
-
-    .timer-indicator {
-      font-weight: 700;
-      color: var(--primary-blue);
-    }
-
-    .timer-indicator.warning {
-      color: #b91c1c;
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    .question-box {
-      margin-bottom: 20px;
-    }
-
-    .question-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.38;
-      letter-spacing: -0.2px;
-    }
-
-    /* Lista de Opciones */
-    .options-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .option-item {
-      background: #ffffff;
-      border: 1.5px solid var(--border-color);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      text-align: left;
-      width: 100%;
-    }
-
-    .option-item:hover:not(:disabled) {
-      border-color: #93c5fd;
-      background: #f8fafc;
-    }
-
-    .option-item:disabled {
-      cursor: default;
-    }
-
-    .option-prefix {
-      width: 26px;
-      height: 26px;
-      min-width: 26px;
-      border-radius: 6px;
-      background: #f1f5f9;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 1px;
-    }
-
-    .option-label {
-      font-size: 0.92rem;
-      font-weight: 500;
-      color: var(--text-main);
-      line-height: 1.35;
-      flex: 1;
-    }
-
-    /* Estados de validación sobrios */
-    .option-item.selected-correct {
-      background: var(--success-bg) !important;
-      border-color: var(--success-border) !important;
-    }
-    .option-item.selected-correct .option-prefix {
-      background: var(--success-text);
-      color: #ffffff;
-    }
-    .option-item.selected-correct .option-label {
-      color: var(--success-text);
-      font-weight: 600;
-    }
-
-    .option-item.selected-incorrect {
-      background: var(--error-bg) !important;
-      border-color: var(--error-border) !important;
-    }
-    .option-item.selected-incorrect .option-prefix {
-      background: var(--error-text);
-      color: #ffffff;
-    }
-    .option-item.selected-incorrect .option-label {
-      color: var(--error-text);
-      font-weight: 600;
-    }
-
-    .option-item.faded {
-      opacity: 0.45;
-    }
-
-    /* Panel de Fundamento Jurídico */
-    .legal-feedback-box {
-      display: none;
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      border-left: 4px solid var(--primary-blue);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 20px;
-    }
-
-    .legal-feedback-box.active {
-      display: block;
-      animation: fadeIn 0.2s ease-out;
-    }
-
-    .feedback-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--primary-navy);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 4px;
-    }
-
-    .feedback-text {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-      margin-bottom: 8px;
-    }
-
-    .legal-cite {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--primary-blue);
-    }
-
-    /* Pantalla 3: Resultados & Tabla de Posiciones */
-    .summary-card {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .summary-header {
-      text-align: center;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 14px;
-    }
-
-    .summary-candidate {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 2px;
-    }
-
-    .summary-verdict {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--primary-blue);
-    }
-
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      text-align: center;
-    }
-
-    .metric-cell {
-      padding: 8px 4px;
-      background: #f8fafc;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-    }
-
-    .metric-value {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--primary-navy);
-      line-height: 1.2;
-    }
-
-    .metric-label {
-      font-size: 0.72rem;
-      color: var(--text-subtle);
-      font-weight: 500;
-      margin-top: 2px;
-    }
-
-    /* Tabla Oficial de Top Mejores */
-    .leaderboard-section {
-      margin-bottom: 24px;
-    }
-
-    .section-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--primary-navy);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .backend-badge {
-      font-size: 0.7rem;
-      color: var(--primary-blue);
-      background: var(--light-blue);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-    }
-
-    .table-responsive {
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      overflow: hidden;
-      background: #ffffff;
-    }
-
-    .leaderboard-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.84rem;
-      text-align: left;
-    }
-
-    .leaderboard-table th {
-      background: #f8fafc;
-      color: var(--text-subtle);
-      font-weight: 600;
-      padding: 10px 12px;
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .leaderboard-table td {
-      padding: 11px 12px;
-      border-bottom: 1px solid #f1f5f9;
-      color: var(--text-main);
-    }
-
-    .leaderboard-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .leaderboard-table tr.user-row {
-      background: var(--light-blue);
-      font-weight: 600;
-    }
-
-    .leaderboard-table tr.user-row td {
-      color: var(--primary-blue);
-    }
-
-    .col-rank {
-      width: 38px;
-      font-weight: 700;
-      color: var(--text-subtle);
-      text-align: center;
-    }
-
-    .col-score {
-      text-align: right;
-      font-weight: 600;
-      color: var(--primary-navy);
-    }
-
-    .badge-you {
-      font-size: 0.65rem;
-      background: var(--primary-blue);
-      color: #ffffff;
-      padding: 1px 6px;
-      border-radius: 4px;
-      margin-left: 6px;
-      font-weight: 700;
-    }
-
-    .btn-delete-entry {
-      background: #fee2e2;
-      border: 1px solid #fca5a5;
-      color: #b91c1c;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      transition: all 0.15s ease;
-    }
-
-    .btn-delete-entry:hover {
-      background: #fecaca;
-      border-color: #ef4444;
-      color: #7f1d1d;
-    }
-
-    .admin-notice-bar {
-      display: none;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin-bottom: 14px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .admin-notice-bar.active {
-      display: flex;
-    }
-
-    .admin-notice-text {
-      font-size: 0.78rem;
-      color: #1e40af;
-      font-weight: 600;
-    }
-
-    .btn-admin-clear {
-      background: #fee2e2;
-      border: 1px solid #fca5a5;
-      color: #991b1b;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-    }
-
-    .btn-admin-clear:hover {
-      background: #fecaca;
-    }
-
-    /* Footer discreto */
-    .app-footer {
-      padding: 14px 22px;
-      background: #f8fafc;
-      border-top: 1px solid var(--border-color);
-      text-align: center;
-      font-size: 0.72rem;
-      color: var(--text-subtle);
-    }
-
-    .button-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: auto;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
+  <div class="app" id="app">
 
-  <div class="app-container">
-    
-    <!-- Header Institucional -->
-    <header class="app-header">
-      <div class="header-branding">
-        <div class="header-logo">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-            <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-            <path d="M7 21h10"/>
-            <path d="M12 3v18"/>
-            <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
-          </svg>
+    <!-- INICIO -->
+    <section class="screen active" id="screen-home" aria-labelledby="home-title">
+      <div class="home-hero">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
         </div>
-        <div class="header-titles">
-          <h1>Legislación General y Laboral</h1>
-          <p>Evaluación Individual • Marco Legal Argentino</p>
-        </div>
+        <p class="eyebrow">Legislación General</p>
+        <h1 id="home-title">Derecho al Toque</h1>
+        <p class="hero-sub">Cada partida arma 12 preguntas nuevas de las Unidades 4 y 5. Contestá rápido: el tiempo suma puntos.</p>
       </div>
-    </header>
 
-    <div class="app-body">
+      <div class="home-card">
+        <label class="field-label" for="player-name">Tu nombre</label>
+        <input type="text" id="player-name" class="text-input" placeholder="Nombre y apellido" maxlength="40" autocomplete="name" enterkeyhint="go">
+        <p class="field-error" id="name-error" role="alert"></p>
 
-      <!-- PANTALLA 1: INICIO Y REGISTRO -->
-      <section class="view-screen active" id="view-intro">
-        <div class="intro-banner">
-          <h2>Evaluación Normativa</h2>
-          <p>Examen de opción múltiple estructurado en 4 módulos temáticos: Constitución Nacional, Principios del Derecho del Trabajo, LCT 20.744 y Régimen de Córdoba (Ley 7186).</p>
+        <p class="field-label" id="unit-label">¿Qué querés repasar?</p>
+        <div class="segmented" role="radiogroup" aria-labelledby="unit-label" id="unit-picker">
+          <button type="button" role="radio" class="seg-btn active" data-unit="all" aria-checked="true">Unidades 4 y 5</button>
+          <button type="button" role="radio" class="seg-btn" data-unit="4" aria-checked="false">Unidad 4</button>
+          <button type="button" role="radio" class="seg-btn" data-unit="5" aria-checked="false">Unidad 5</button>
         </div>
 
-        <ul class="features-list">
-          <li>
-            <div class="bullet-icon">1</div>
-            <div><strong>12 preguntas individuales:</strong> 3 preguntas por módulo con una sola opción correcta.</div>
-          </li>
-          <li>
-            <div class="bullet-icon">2</div>
-            <div><strong>Control de tiempo:</strong> 20 segundos por pregunta para responder.</div>
-          </li>
-          <li>
-            <div class="bullet-icon">3</div>
-            <div><strong>Cuadro de honor integrado:</strong> Registro en base de datos para comparar los mejores desempeños.</div>
-          </li>
+        <ul class="rules">
+          <li><span class="rule-num">12</span><span>preguntas por partida, distintas cada vez</span></li>
+          <li><span class="rule-num">20s</span><span>por pregunta; si se acaba, cuenta como error</span></li>
+          <li><span class="rule-num">+pts</span><span>respondé rápido y encadená aciertos para sumar más</span></li>
         </ul>
 
-        <div class="form-group">
-          <label for="participant-name">Nombre y Apellido</label>
-          <input type="text" id="participant-name" class="form-input" placeholder="Ingresá tu nombre completo" maxlength="40" autocomplete="name">
-        </div>
+        <button type="button" class="btn btn-primary" id="btn-play">Jugar</button>
+        <button type="button" class="btn btn-ghost" id="btn-open-ranking">Ver ranking</button>
+      </div>
+      <p class="home-foot" id="bank-info"></p>
+    </section>
 
-        <div class="button-stack">
-          <button class="btn-primary" id="btn-start" onclick="startEvaluation()">
-            <span>Comenzar Evaluación</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
-        </div>
-      </section>
+    <!-- PARTIDA -->
+    <section class="screen" id="screen-quiz" aria-label="Pregunta">
+      <header class="quiz-top">
+        <button type="button" class="icon-btn" id="btn-quit" aria-label="Salir de la partida">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="quiz-count" id="quiz-count">1 / 12</div>
+        <div class="quiz-score" aria-live="polite"><span id="quiz-score">0</span> pts</div>
+      </header>
 
-      <!-- PANTALLA 2: EVALUACIÓN DE PREGUNTAS -->
-      <section class="view-screen" id="view-quiz">
-        <div class="eval-meta-bar">
-          <span class="badge-round" id="quiz-module-badge">Módulo 1: Constitución y Derechos</span>
-          <span id="quiz-counter">Pregunta 1 de 12</span>
-        </div>
+      <div class="segments" id="segments" aria-hidden="true"></div>
 
-        <div class="progress-track">
-          <div class="progress-fill" id="quiz-progress-fill"></div>
-        </div>
+      <div class="timer" id="timer" role="timer" aria-label="Tiempo restante">
+        <div class="timer-track"><div class="timer-fill" id="timer-fill"></div></div>
+        <span class="timer-num" id="timer-num">20</span>
+      </div>
 
-        <div class="status-ribbon">
-          <div class="status-item">
-            <span>Participante:</span>
-            <strong id="quiz-participant-display">-</strong>
+      <div class="quiz-body" id="quiz-body">
+        <div class="q-meta">
+          <span class="chip" id="q-topic">Unidad 4</span>
+          <span class="streak" id="q-streak" hidden></span>
+        </div>
+        <h2 class="q-text" id="q-text"></h2>
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback" hidden>
+          <div class="fb-head">
+            <span class="fb-title" id="fb-title"></span>
+            <span class="fb-points" id="fb-points"></span>
           </div>
-          <div class="status-item">
-            <span>Tiempo:</span>
-            <span class="timer-indicator" id="quiz-timer">20s</span>
-          </div>
-          <div class="status-item">
-            <span>Puntaje:</span>
-            <strong id="quiz-score-display">0 pts</strong>
-          </div>
+          <p class="fb-answer" id="fb-answer"></p>
+          <p class="fb-text" id="fb-text"></p>
         </div>
+      </div>
 
-        <div class="question-box">
-          <h2 class="question-title" id="quiz-question-text">¿Cuál es la ley suprema de Argentina?</h2>
+      <div class="quiz-bottom" id="quiz-bottom" hidden>
+        <button type="button" class="btn btn-primary" id="btn-next">Siguiente</button>
+      </div>
+    </section>
+
+    <!-- RESULTADOS -->
+    <section class="screen" id="screen-results" aria-labelledby="res-title">
+      <div class="res-hero">
+        <p class="eyebrow" id="res-name"></p>
+        <h2 id="res-title" class="res-verdict"></h2>
+        <div class="res-score"><span id="res-score">0</span><small>puntos</small></div>
+        <div class="res-stats">
+          <div><strong id="res-correct">0/12</strong><span>aciertos</span></div>
+          <div><strong id="res-streak">0</strong><span>mejor racha</span></div>
+          <div><strong id="res-time">0s</strong><span>tiempo</span></div>
         </div>
+      </div>
 
-        <div class="options-group" id="quiz-options-group">
-          <!-- Opciones dinámicas -->
+      <div class="card">
+        <div class="card-head">
+          <h3>Repasá tus errores</h3>
+          <span class="muted" id="res-err-count"></span>
         </div>
+        <div id="review-list" class="review-list"></div>
+      </div>
 
-        <div class="legal-feedback-box" id="legal-feedback-box">
-          <div class="feedback-title" id="feedback-status-title">Fundamento Jurídico</div>
-          <p class="feedback-text" id="feedback-text"></p>
-          <div class="legal-cite" id="feedback-cite"></div>
+      <div class="card">
+        <div class="card-head">
+          <h3>Ranking</h3>
+          <span class="badge" id="rank-status-res"></span>
         </div>
-
-        <div class="button-stack" style="margin-top: auto;">
-          <button class="btn-primary" id="btn-next-step" style="display: none;" onclick="handleNextQuestion()">
-            <span id="btn-next-label">Siguiente Pregunta</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
+        <div class="admin-bar" id="admin-bar-res" hidden>
+          <span>Moderación activa</span>
+          <button type="button" class="btn-mini danger" data-admin-clear>Borrar todo</button>
         </div>
-      </section>
+        <ol class="ranking" id="ranking-res"></ol>
+      </div>
 
-      <!-- PANTALLA 3: RESULTADOS Y CUADRO DE HONOR (LEADERBOARD) -->
-      <section class="view-screen" id="view-results">
-        
-        <div class="summary-card">
-          <div class="summary-header">
-            <h2 class="summary-candidate" id="result-name">Juan Pérez</h2>
-            <p class="summary-verdict" id="result-verdict">Evaluación Completada</p>
-          </div>
+      <div class="res-actions">
+        <button type="button" class="btn btn-primary" id="btn-again">Jugar otra vez</button>
+        <button type="button" class="btn btn-ghost" id="btn-share">Compartir resultado</button>
+        <button type="button" class="btn btn-link" id="btn-home">Volver al inicio</button>
+      </div>
+    </section>
 
-          <div class="metrics-grid">
-            <div class="metric-cell">
-              <div class="metric-value" id="result-correct-count">11/12</div>
-              <div class="metric-label">Respuestas Correctas</div>
-            </div>
-            <div class="metric-cell">
-              <div class="metric-value" id="result-score-value">1.180</div>
-              <div class="metric-label">Puntaje Total</div>
-            </div>
-            <div class="metric-cell">
-              <div class="metric-value" id="result-percentage">92%</div>
-              <div class="metric-label">Efectividad</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tabla de Clasificación / Top Mejores -->
-        <div class="leaderboard-section">
-          <div class="section-title-row">
-            <h3 class="section-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-                <path d="M4 22h16"/>
-                <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34c0-.77.34-1.5.94-1.99l1.63-1.34c.91-.74 1.43-1.85 1.43-3.03V6H6v2.34c0 1.18.52 2.29 1.43 3.03l1.63 1.34c.6.49.94 1.22.94 1.99Z"/>
-              </svg>
-              <span>Top Mejores Resultados</span>
-            </h3>
-            <span class="backend-badge" id="backend-status-tag">Servidor Activo</span>
-          </div>
-
-          <!-- Panel de Control para Lorenzo Olocco -->
-          <div class="admin-notice-bar" id="admin-notice-bar">
-            <div class="admin-notice-text">
-              <span>Panel de Moderador (Lorenzo Olocco): Podés eliminar calificaciones individuales o vaciar la tabla.</span>
-            </div>
-            <button class="btn-admin-clear" onclick="adminClearAllScores()">Borrar Todo</button>
-          </div>
-
-          <div class="table-responsive">
-            <table class="leaderboard-table">
-              <thead>
-                <tr>
-                  <th class="col-rank">#</th>
-                  <th>Participante</th>
-                  <th style="text-align: center;">Aciertos</th>
-                  <th class="col-score">Puntaje</th>
-                </tr>
-              </thead>
-              <tbody id="leaderboard-tbody">
-                <tr>
-                  <td colspan="4" style="text-align: center; color: var(--text-subtle); padding: 16px;">
-                    Cargando clasificación...
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="button-stack">
-          <button class="btn-primary" onclick="restartEvaluation()">
-            <span>Realizar Nueva Evaluación</span>
-          </button>
-          <button class="btn-secondary" onclick="copyResultSummary()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
-              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
-            </svg>
-            <span id="btn-copy-label">Copiar Reporte Formal</span>
-          </button>
-        </div>
-
-      </section>
-
-    </div>
-
-    <footer class="app-footer">
-      Sistema Oficial de Evaluación • Legislación Laboral y Constitución Nacional
-    </footer>
+    <!-- RANKING -->
+    <section class="screen" id="screen-ranking" aria-labelledby="rank-title">
+      <header class="plain-top">
+        <button type="button" class="icon-btn" id="btn-rank-back" aria-label="Volver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h2 id="rank-title">Ranking</h2>
+        <span class="badge" id="rank-status"></span>
+      </header>
+      <div class="card">
+        <ol class="ranking" id="ranking-main"></ol>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Tus partidas en este celular</h3></div>
+        <ol class="ranking" id="ranking-local"></ol>
+      </div>
+    </section>
 
   </div>
 
-  <script>
-    /* ==========================================================
-       DATOS NORMATIVOS OFICIALES (12 PREGUNTAS)
-       ========================================================== */
-    const EVAL_DATA = [
-      // Módulo 1: Constitución y Derechos
-      {
-        module: "Módulo 1: Constitución y Derechos",
-        question: "¿Cuál es la ley suprema de Argentina?",
-        options: [
-          "La Constitución Nacional",
-          "El Código de Tránsito",
-          "El reglamento de una empresa"
-        ],
-        correctIndex: 0,
-        explanation: "La Constitución Nacional es la norma cúspide del ordenamiento jurídico (junto a los tratados internacionales de DD.HH. con jerarquía constitucional según el art. 75 inc. 22). Todas las demás leyes deben ajustarse a ella.",
-        cite: "Art. 31 y 75 inc. 22 de la Constitución Nacional"
-      },
-      {
-        module: "Módulo 1: Constitución y Derechos",
-        question: "¿Qué artículo de la Constitución protege los derechos de los trabajadores?",
-        options: [
-          "Art. 1",
-          "Art. 14 bis",
-          "Art. 100"
-        ],
-        correctIndex: 1,
-        explanation: "El Artículo 14 bis fue incorporado en la reforma de 1957. Garantiza condiciones dignas y equitativas de labor, jornada limitada, descanso y vacaciones pagadas, retribución justa y seguridad social integral.",
-        cite: "Artículo 14 bis de la Constitución Nacional"
-      },
-      {
-        module: "Módulo 1: Constitución y Derechos",
-        question: "¿Cuál de estos es un derecho del trabajador según el art. 14 bis?",
-        options: [
-          "Trabajar sin descanso",
-          "Cobrar menos por la misma tarea",
-          "Vacaciones pagas"
-        ],
-        correctIndex: 2,
-        explanation: "El Art. 14 bis reconoce expresamente el derecho a descanso y vacaciones pagadas, jornada limitada, igual remuneración por igual tarea y protección contra el despido arbitrario.",
-        cite: "Art. 14 bis (primer párrafo) CN"
-      },
-
-      // Módulo 2: Historia y Principios
-      {
-        module: "Módulo 2: Historia y Principios",
-        question: "¿Qué pedían los obreros de Chicago en 1886?",
-        options: [
-          "Más feriados",
-          "Cobrar en dólares",
-          "Jornada de 8 horas"
-        ],
-        correctIndex: 2,
-        explanation: "En mayo de 1886, los obreros de Chicago reclamaron la reducción de la jornada laboral bajo el lema: '8 horas de trabajo, 8 horas de reposo y 8 horas de educación/hogar'. De este hito surge el Día Internacional de los Trabajadores.",
-        cite: "Reclamo histórico de Haymarket (1886) - Jornada máxima"
-      },
-      {
-        module: "Módulo 2: Historia y Principios",
-        question: "¿A quién busca proteger el derecho laboral?",
-        options: [
-          "Al trabajador, que es la parte más débil",
-          "Solo al empleador",
-          "Solo al Estado"
-        ],
-        correctIndex: 0,
-        explanation: "El principio protectorio ('in dubio pro operario') equilibra la desigualdad sustancial entre empleador y dependiente, garantizando un piso inderogable de derechos humanos y laborales.",
-        cite: "Principio Protectorio - Art. 9 de la Ley 20.744 (LCT)"
-      },
-      {
-        module: "Módulo 2: Historia y Principios",
-        question: "¿Puede un trabajador renunciar a sus derechos laborales?",
-        options: [
-          "Sí, cuando quiera",
-          "No, son irrenunciables",
-          "Solo si el jefe se lo pide"
-        ],
-        correctIndex: 1,
-        explanation: "Por el Principio de Irrenunciabilidad (Art. 12 LCT), toda convención de partes que suprima o reduzca los derechos previstos en la ley o convenios colectivos es nula y sin efecto.",
-        cite: "Art. 12 de la Ley de Contrato de Trabajo N° 20.744"
-      },
-
-      // Módulo 3: Contrato de Trabajo
-      {
-        module: "Módulo 3: Contrato de Trabajo",
-        question: "¿Qué ley regula el contrato de trabajo en Argentina?",
-        options: [
-          "La Ley de Tránsito",
-          "La Ley de Contrato de Trabajo (20.744)",
-          "La Ley de Propiedad Horizontal"
-        ],
-        correctIndex: 1,
-        explanation: "La Ley N° 20.744 (LCT) sancionada en 1974 es la legislación marco que rige las relaciones laborales del sector privado bajo relación de dependencia en la República Argentina.",
-        cite: "Ley Nacional N° 20.744 de Contrato de Trabajo"
-      },
-      {
-        module: "Módulo 3: Contrato de Trabajo",
-        question: "¿Cuándo hay un contrato de trabajo?",
-        options: [
-          "Cuando alguien trabaja para otro, bajo sus órdenes, y cobra un sueldo",
-          "Cuando alguien ayuda gratis a un amigo",
-          "Cuando una empresa vende un producto"
-        ],
-        correctIndex: 0,
-        explanation: "Existe contrato de trabajo cuando una persona física se obliga a realizar actos o prestar servicios a favor de otra persona y bajo su dependencia (subordinación jurídica, económica y técnica) a cambio de una remuneración.",
-        cite: "Art. 21 y 22 de la Ley 20.744"
-      },
-      {
-        module: "Módulo 3: Contrato de Trabajo",
-        question: "El trabajador, ¿qué tiene que ser siempre?",
-        options: [
-          "Una empresa",
-          "Un grupo de empresas",
-          "Una persona física"
-        ],
-        correctIndex: 2,
-        explanation: "El trabajador es siempre una persona humana (física). El carácter personalísimo de la prestación laboral impide que una persona jurídica actúe en calidad de trabajadora dependiente.",
-        cite: "Art. 25 de la Ley 20.744"
-      },
-
-      // Módulo 4: Unidad 5 - Normativa y Jornada
-      {
-        module: "Módulo 4: Unidad 5 - APM y Régimen Laboral",
-        question: "¿Qué ley de Córdoba regula la profesión del APM?",
-        options: [
-          "La Ley 7186",
-          "La Ley de Tránsito",
-          "La Ley de Alquileres"
-        ],
-        correctIndex: 0,
-        explanation: "La Ley Provincial N° 7186 de la Provincia de Córdoba regula de manera específica el ejercicio profesional de los Agentes de Propaganda Médica (APM), régimen de matriculación y derechos.",
-        cite: "Ley Provincial de Córdoba N° 7186"
-      },
-      {
-        module: "Módulo 4: Unidad 5 - APM y Régimen Laboral",
-        question: "¿Cuál es la jornada máxima de trabajo por día?",
-        options: [
-          "12 horas",
-          "8 horas",
-          "4 horas"
-        ],
-        correctIndex: 1,
-        explanation: "La Ley Nacional 11.544 establece que la duración del trabajo diurno ordinario no puede exceder de 8 horas diarias o 48 horas semanales. Toda fracción superior constituye jornada extraordinaria sujeta a recargo.",
-        cite: "Ley Nacional 11.544 y Art. 196 de la LCT"
-      },
-      {
-        module: "Módulo 4: Unidad 5 - APM y Régimen Laboral",
-        question: "Si despiden al trabajador sin causa justa, ¿qué corresponde?",
-        options: [
-          "Nada, el empleador decide",
-          "Solo un saludo",
-          "Una indemnización"
-        ],
-        correctIndex: 2,
-        explanation: "En virtud de la garantía contra el despido arbitrario (Art. 14 bis CN), el distracto sin causa justa devenga la indemnización por antigüedad (Art. 245 LCT), indemnización sustitutiva de preaviso e integración del mes de despido.",
-        cite: "Art. 245 de la Ley 20.744 y Art. 14 bis CN"
-      }
-    ];
-
-    /* ==========================================================
-       ESTADO DE LA APLICACIÓN
-       ========================================================== */
-    const state = {
-      participantName: "",
-      currentIndex: 0,
-      score: 0,
-      correctCount: 0,
-      answered: false,
-      timer: 20,
-      timerInterval: null,
-      startTime: null,
-      totalTimeSeconds: 0,
-      currentSubmissionId: null
-    };
-
-    // Registros locales limpios para participantes reales
-    const LOCAL_BENCHMARK = [];
-
-    /* ==========================================================
-       NAVEGACIÓN ENTRE VISTAS
-       ========================================================== */
-    function showView(viewId) {
-      document.querySelectorAll('.view-screen').forEach(v => v.classList.remove('active'));
-      const target = document.getElementById(viewId);
-      if (target) {
-        target.classList.add('active');
-      }
-    }
-
-    /* ==========================================================
-       INICIO DE EVALUACIÓN
-       ========================================================== */
-    function startEvaluation() {
-      const nameInput = document.getElementById('participant-name');
-      const name = nameInput.value.trim();
-
-      if (!name) {
-        nameInput.focus();
-        nameInput.style.borderColor = 'var(--error-text)';
-        return;
-      }
-
-      state.participantName = name;
-      state.currentIndex = 0;
-      state.score = 0;
-      state.correctCount = 0;
-      state.startTime = Date.now();
-      state.currentSubmissionId = 'sub_' + Date.now();
-
-      document.getElementById('quiz-participant-display').innerText = state.participantName;
-      showView('view-quiz');
-      loadQuestion();
-    }
-
-    /* ==========================================================
-       CARGA Y RESOLUCIÓN DE PREGUNTAS
-       ========================================================== */
-    function loadQuestion() {
-      state.answered = false;
-      const q = EVAL_DATA[state.currentIndex];
-      const total = EVAL_DATA.length;
-
-      // Actualizar indicadores
-      document.getElementById('quiz-module-badge').innerText = q.module;
-      document.getElementById('quiz-counter').innerText = `Pregunta ${state.currentIndex + 1} de ${total}`;
-      document.getElementById('quiz-progress-fill').style.width = `${((state.currentIndex + 1) / total) * 100}%`;
-      document.getElementById('quiz-score-display').innerText = `${state.score} pts`;
-      document.getElementById('quiz-question-text').innerText = q.question;
-
-      // Ocultar feedback y botón siguiente
-      document.getElementById('legal-feedback-box').classList.remove('active');
-      document.getElementById('btn-next-step').style.display = 'none';
-
-      // Renderizar opciones
-      const container = document.getElementById('quiz-options-group');
-      container.innerHTML = '';
-      const letters = ['A', 'B', 'C'];
-
-      q.options.forEach((optText, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-item';
-        btn.id = `opt-btn-${idx}`;
-        btn.innerHTML = `
-          <div class="option-prefix">${letters[idx]}</div>
-          <div class="option-label">${optText}</div>
-        `;
-        btn.onclick = () => selectOption(idx);
-        container.appendChild(btn);
-      });
-
-      // Iniciar cuenta regresiva
-      startTimer();
-    }
-
-    function startTimer() {
-      clearInterval(state.timerInterval);
-      state.timer = 20;
-      updateTimerUI();
-
-      state.timerInterval = setInterval(() => {
-        state.timer--;
-        updateTimerUI();
-
-        if (state.timer <= 0) {
-          clearInterval(state.timerInterval);
-          selectOption(-1); // Tiempo agotado
-        }
-      }, 1000);
-    }
-
-    function updateTimerUI() {
-      const el = document.getElementById('quiz-timer');
-      el.innerText = `${state.timer}s`;
-      if (state.timer <= 5) {
-        el.classList.add('warning');
-      } else {
-        el.classList.remove('warning');
-      }
-    }
-
-    function selectOption(selectedIdx) {
-      if (state.answered) return;
-      state.answered = true;
-      clearInterval(state.timerInterval);
-
-      const q = EVAL_DATA[state.currentIndex];
-      const isCorrect = selectedIdx === q.correctIndex;
-
-      // Deshabilitar y colorear opciones
-      const buttons = document.querySelectorAll('.option-item');
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (idx === q.correctIndex) {
-          btn.classList.add('selected-correct');
-        } else if (idx === selectedIdx && !isCorrect) {
-          btn.classList.add('selected-incorrect');
-        } else {
-          btn.classList.add('faded');
-        }
-      });
-
-      // Cálculo de puntaje
-      if (isCorrect) {
-        state.correctCount++;
-        const timeBonus = Math.max(0, state.timer * 4);
-        state.score += (100 + timeBonus);
-        document.getElementById('quiz-score-display').innerText = `${state.score} pts`;
-      }
-
-      // Mostrar fundamento legal
-      showLegalFeedback(q, isCorrect);
-
-      // Botón siguiente
-      const nextBtn = document.getElementById('btn-next-step');
-      const isLast = state.currentIndex === EVAL_DATA.length - 1;
-      document.getElementById('btn-next-label').innerText = isLast ? 'Finalizar y Ver Resultados' : 'Siguiente Pregunta';
-      nextBtn.style.display = 'flex';
-    }
-
-    function showLegalFeedback(question, isCorrect) {
-      const box = document.getElementById('legal-feedback-box');
-      const title = document.getElementById('feedback-status-title');
-      const text = document.getElementById('feedback-text');
-      const cite = document.getElementById('feedback-cite');
-
-      title.innerText = isCorrect ? 'Respuesta Correcta' : 'Respuesta Incorrecta';
-      title.style.color = isCorrect ? 'var(--success-text)' : 'var(--error-text)';
-      text.innerText = question.explanation;
-      cite.innerText = `Referencia: ${question.cite}`;
-
-      box.classList.add('active');
-    }
-
-    function handleNextQuestion() {
-      if (state.currentIndex < EVAL_DATA.length - 1) {
-        state.currentIndex++;
-        loadQuestion();
-      } else {
-        finishEvaluation();
-      }
-    }
-
-    /* ==========================================================
-       FINALIZACIÓN, RESULTADOS Y COMUNICACIÓN CON BACKEND
-       ========================================================== */
-    async function finishEvaluation() {
-      state.totalTimeSeconds = Math.round((Date.now() - state.startTime) / 1000);
-      const totalQuestions = EVAL_DATA.length;
-      const percentage = Math.round((state.correctCount / totalQuestions) * 100);
-
-      // Actualizar tarjeta resumen
-      document.getElementById('result-name').innerText = state.participantName;
-      document.getElementById('result-correct-count').innerText = `${state.correctCount} / ${totalQuestions}`;
-      document.getElementById('result-score-value').innerText = state.score.toLocaleString('es-AR');
-      document.getElementById('result-percentage').innerText = `${percentage}%`;
-
-      const verdictEl = document.getElementById('result-verdict');
-      if (percentage === 100) {
-        verdictEl.innerText = "Dictamen: Aprobado con Distinción Sobresaliente";
-        verdictEl.style.color = "var(--primary-blue)";
-      } else if (percentage >= 75) {
-        verdictEl.innerText = "Dictamen: Aprobado Satisfactoriamente";
-        verdictEl.style.color = "var(--success-text)";
-      } else {
-        verdictEl.innerText = "Dictamen: No Alcanzó el Puntaje Mínimo Requerido";
-        verdictEl.style.color = "var(--error-text)";
-      }
-
-      showView('view-results');
-
-      // Enviar resultado al backend integrado (/api/scores)
-      await syncScoreWithBackend();
-    }
-
-    /* ==========================================================
-       INTEGRACIÓN BACKEND /API/SCORES (VERCEL SERVERLESS + FALLBACK)
-       ========================================================== */
-    async function syncScoreWithBackend() {
-      const payload = {
-        name: state.participantName,
-        correctCount: state.correctCount,
-        totalQuestions: EVAL_DATA.length,
-        score: state.score,
-        timeTaken: state.totalTimeSeconds
-      };
-
-      let scoresList = [];
-
-      try {
-        // Intento de envío a Vercel Serverless Function
-        const response = await fetch('/api/scores', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.topScores) {
-            scoresList = data.topScores;
-            document.getElementById('backend-status-tag').innerText = "Vercel API Online";
-          }
-        } else {
-          throw new Error('Respuesta no satisfactoria de la API');
-        }
-      } catch (err) {
-        // Fallback a almacenamiento local persistente
-        console.warn('API no disponible en este entorno, utilizando almacenamiento local:', err);
-        document.getElementById('backend-status-tag').innerText = "Modo Local";
-        scoresList = saveScoreLocally(payload);
-      }
-
-      renderLeaderboard(scoresList);
-    }
-
-    function saveScoreLocally(payload) {
-      let saved = [];
-      try {
-        const stored = localStorage.getItem('eval_scores_db');
-        saved = stored ? JSON.parse(stored) : [...LOCAL_BENCHMARK];
-      } catch (e) {
-        saved = [...LOCAL_BENCHMARK];
-      }
-
-      saved.push({
-        id: state.currentSubmissionId,
-        name: payload.name,
-        correctCount: payload.correctCount,
-        totalQuestions: payload.totalQuestions,
-        score: payload.score,
-        date: new Date().toISOString().split('T')[0]
-      });
-
-      // Ordenar por aciertos y luego por puntaje
-      saved.sort((a, b) => {
-        if (b.correctCount !== a.correctCount) {
-          return b.correctCount - a.correctCount;
-        }
-        return b.score - a.score;
-      });
-
-      try {
-        localStorage.setItem('eval_scores_db', JSON.stringify(saved.slice(0, 30)));
-      } catch (e) {}
-
-      return saved.slice(0, 10);
-    }
-
-    function isCurrentUserAdmin() {
-      return state.participantName.trim().toLowerCase() === 'lorenzo olocco';
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    function renderLeaderboard(list) {
-      const tbody = document.getElementById('leaderboard-tbody');
-      tbody.innerHTML = '';
-
-      const isAdmin = isCurrentUserAdmin();
-      const adminNotice = document.getElementById('admin-notice-bar');
-      if (adminNotice) {
-        adminNotice.classList.toggle('active', isAdmin);
-      }
-
-      // Configurar columnas según permisos
-      const theadRow = document.querySelector('.leaderboard-table thead tr');
-      if (theadRow) {
-        if (isAdmin) {
-          theadRow.innerHTML = `
-            <th class="col-rank">#</th>
-            <th>Participante</th>
-            <th style="text-align: center;">Aciertos</th>
-            <th class="col-score">Puntaje</th>
-            <th style="text-align: center; width: 75px;">Acción</th>
-          `;
-        } else {
-          theadRow.innerHTML = `
-            <th class="col-rank">#</th>
-            <th>Participante</th>
-            <th style="text-align: center;">Aciertos</th>
-            <th class="col-score">Puntaje</th>
-          `;
-        }
-      }
-
-      if (!list || list.length === 0) {
-        const span = isAdmin ? 5 : 4;
-        tbody.innerHTML = `<tr><td colspan="${span}" style="text-align: center; color: var(--text-subtle); padding: 18px;">No hay registros aún. Sé el primero en completar la evaluación.</td></tr>`;
-        return;
-      }
-
-      list.forEach((item, idx) => {
-        const tr = document.createElement('tr');
-        const isCurrent = item.name === state.participantName && (item.score === state.score || item.id === state.currentSubmissionId);
-        
-        if (isCurrent) {
-          tr.className = 'user-row';
-        }
-
-        let actionCell = '';
-        if (isAdmin) {
-          actionCell = `
-            <td style="text-align: center;">
-              <button class="btn-delete-entry" onclick="adminDeleteScore('${item.id}', '${escapeHtml(item.name)}')" title="Borrar calificación de ${escapeHtml(item.name)}">
-                Borrar
-              </button>
-            </td>
-          `;
-        }
-
-        tr.innerHTML = `
-          <td class="col-rank">${idx + 1}</td>
-          <td>
-            ${escapeHtml(item.name)}
-            ${isCurrent ? '<span class="badge-you">TÚ</span>' : ''}
-          </td>
-          <td style="text-align: center; font-weight: 600;">${item.correctCount} / 12</td>
-          <td class="col-score">${item.score.toLocaleString('es-AR')}</td>
-          ${actionCell}
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    async function adminDeleteScore(id, name) {
-      if (!isCurrentUserAdmin()) return;
-      if (!confirm(`¿Eliminar la calificación de "${name}"?`)) return;
-
-      try {
-        const res = await fetch('/api/scores', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, adminName: state.participantName })
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          removeScoreFromLocal(id);
-          renderLeaderboard(data.topScores || getLocalScoresList());
-        } else {
-          throw new Error('Error al eliminar en servidor');
-        }
-      } catch (e) {
-        const updated = removeScoreFromLocal(id);
-        renderLeaderboard(updated);
-      }
-    }
-
-    async function adminClearAllScores() {
-      if (!isCurrentUserAdmin()) return;
-      if (!confirm('¿Estás seguro de que deseás BORRAR TODAS las calificaciones de la tabla?')) return;
-
-      try {
-        const res = await fetch('/api/scores', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ clearAll: true, adminName: state.participantName })
-        });
-
-        clearAllLocalScores();
-        renderLeaderboard([]);
-      } catch (e) {
-        clearAllLocalScores();
-        renderLeaderboard([]);
-      }
-    }
-
-    function removeScoreFromLocal(id) {
-      let saved = getLocalScoresList();
-      saved = saved.filter(item => item.id !== id);
-      try {
-        localStorage.setItem('eval_scores_db', JSON.stringify(saved));
-      } catch (e) {}
-      return saved;
-    }
-
-    function clearAllLocalScores() {
-      try {
-        localStorage.removeItem('eval_scores_db');
-      } catch (e) {}
-    }
-
-    function getLocalScoresList() {
-      try {
-        const stored = localStorage.getItem('eval_scores_db');
-        return stored ? JSON.parse(stored) : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function restartEvaluation() {
-      document.getElementById('participant-name').value = '';
-      showView('view-intro');
-    }
-
-    function copyResultSummary() {
-      const text = `EVALUACIÓN DE LEGISLACIÓN LABORAL ARGENTINA\n` +
-                   `Participante: ${state.participantName}\n` +
-                   `Aciertos: ${state.correctCount} de 12 preguntas (${Math.round((state.correctCount / 12) * 100)}%)\n` +
-                   `Puntaje Obtenido: ${state.score} pts\n` +
-                   `Fecha: ${new Date().toLocaleDateString('es-AR')}`;
-
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-          const btn = document.getElementById('btn-copy-label');
-          btn.innerText = "¡Copiado con éxito!";
-          setTimeout(() => { btn.innerText = "Copiar Reporte Formal"; }, 2500);
-        });
-      }
-    }
-  </script>
+  <!-- Confirmación propia (el confirm() del navegador se ve mal en celulares) -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h3 id="modal-title"></h3>
+      <p id="modal-text"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="modal-cancel">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="modal-ok">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="questions.js?v=3"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
